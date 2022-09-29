@@ -1,0 +1,5 @@
+to start up backend:
+npm start 
+to start up the front end 
+npm run dev 
+http://localhost:3000/
