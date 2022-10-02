@@ -92,4 +92,19 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
+//Lauren 
+//DELETE for the intake form
+router.delete("/:id", (req,res,next)=>{
+    primarydata.deleteOne(
+        {_id:req.params.id}, 
+        (error,data)=>{
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
+
 module.exports = router;
