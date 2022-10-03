@@ -5,6 +5,11 @@ const Schema = mongoose.Schema;
 //collection for intakeData
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    client_id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     firstName: {
         type: String,
         require: true
@@ -17,17 +22,18 @@ let primaryDataSchema = new Schema({
         required: true
     },
 
-    organization_id:{
-        type: Number,
-        require: true
+    org_id:{
+        type: mongoose.Schema.Types.Number, // or ObjectID
+        ref: 'organization'
+        
     },
     email: {
         type: String
     },
-    phoneNumbers: {
-        type: Array,
+    phoneNumbers: [{
+        type: Number,
         required: true
-    },
+    }],
     address: {
         line1: {
             type: String
@@ -43,7 +49,7 @@ let primaryDataSchema = new Schema({
             type: String,
         },
         zip: {
-            type: String,
+            type: Number,
         }
 }
 }, {
@@ -60,9 +66,10 @@ let eventDataSchema = new Schema({
         type: String,
         require: true
     },
-    services: {
-        type: Array
-    },
+    services: [{
+        type: String,
+        require: true
+    }],
     date: {
         type: Date,
         required: true
@@ -81,14 +88,16 @@ let eventDataSchema = new Schema({
             type: String,
         },
         zip: {
-            type: String,
+            type: Number,
         }
     },
     description: {
         type: String,
     },
-    attendees: [{
-        type: String
+    // acts as the list of attendees 
+    client_id: [{
+        type: mongoose.Schema.Types.Number, // or ObjectID
+        ref: 'primaryData'
     }]
 }, {
     collection: 'eventData'
