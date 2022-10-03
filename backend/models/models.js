@@ -17,17 +17,18 @@ let primaryDataSchema = new Schema({
         required: true
     },
 
-    organization_id:{
-        type: Number,
-        require: true
+    org_id:{
+        type: mongoose.Schema.Types.Number, // or ObjectID
+        ref: 'organization'
+        
     },
     email: {
         type: String
     },
-    phoneNumbers: {
-        type: Array,
+    phoneNumbers: [{
+        type: Number,
         required: true
-    },
+    }],
     address: {
         line1: {
             type: String
@@ -43,7 +44,7 @@ let primaryDataSchema = new Schema({
             type: String,
         },
         zip: {
-            type: String,
+            type: Number,
         }
 }
 }, {
@@ -88,7 +89,8 @@ let eventDataSchema = new Schema({
         type: String,
     },
     attendees: [{
-        type: String
+        type: mongoose.Schema.Types.Number, // or ObjectID
+        ref: 'StudentModel'
     }]
 }, {
     collection: 'eventData'
