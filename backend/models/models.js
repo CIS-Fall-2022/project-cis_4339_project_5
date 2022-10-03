@@ -5,6 +5,11 @@ const Schema = mongoose.Schema;
 //collection for intakeData
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    client_id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     firstName: {
         type: String,
         require: true
@@ -61,9 +66,10 @@ let eventDataSchema = new Schema({
         type: String,
         require: true
     },
-    services: {
-        type: Array
-    },
+    services: [{
+        type: String,
+        require: true
+    }],
     date: {
         type: Date,
         required: true
@@ -82,15 +88,16 @@ let eventDataSchema = new Schema({
             type: String,
         },
         zip: {
-            type: String,
+            type: Number,
         }
     },
     description: {
         type: String,
     },
-    attendees: [{
+    // acts as the list of attendees 
+    client_id: [{
         type: mongoose.Schema.Types.Number, // or ObjectID
-        ref: 'StudentModel'
+        ref: 'primaryData'
     }]
 }, {
     collection: 'eventData'
