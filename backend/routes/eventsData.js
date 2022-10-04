@@ -94,36 +94,6 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
-//PUT add attendee to event
-router.put("/addAttendee/:id", (req, res, next) => {
-    //only add attendee if not yet signed uo
-    eventdata.find( 
-        { _id: req.params.id, attendees: req.body.attendee }, 
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                if (data.length == 0) {
-                    eventdata.updateOne(
-                        { _id: req.params.id }, 
-                        { $push: { attendees: req.body.attendee } },
-                        (error, data) => {
-                            if (error) {
-                                consol
-                                return next(error);
-                            } else {
-                                res.json(data);
-                            }
-                        }
-                    );
-                }
-                
-            }
-        }
-    );
-    
-});
-
 //Lauren 
 //DELETE for the intake form
 router.delete("/:id", (req,res,next)=>{
@@ -137,6 +107,40 @@ router.delete("/:id", (req,res,next)=>{
             }
         }
     );
+});
+
+
+
+//PUT add attendee to event using client ID
+//PUT add attendee to event using clinetID
+router.put("/addAttendee/:id", (req, res, next) => {
+    //only add attendee if not yet signed uo
+    eventdata.find( 
+        { event_id: req.params.id, attendees: req.body.client_id }, 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                if (data.length == 0) {
+                    eventdata.updateOne(
+                        { event_id: req.params.id }, 
+                        { $push: { attendees: req.body.client_id } },
+                        (error, data) => {
+                            if (error) {
+                                consol
+                                return next(error);
+                            } else {
+                                res.send('Client is added to event.');
+                                console.log('Event successfully updated!', data)
+                            }
+                        }
+                    );
+                }
+
+            }
+        }
+    );
+
 });
 
 module.exports = router;
