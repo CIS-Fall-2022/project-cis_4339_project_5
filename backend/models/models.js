@@ -62,6 +62,13 @@ let primaryDataSchema = new Schema({
 //collection for eventData
 let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    event_id: {
+        type: Number,
+        require: true,
+        unique: true
+
+    },
+
     eventName: {
         type: String,
         require: true
@@ -95,10 +102,10 @@ let eventDataSchema = new Schema({
         type: String,
     },
     // acts as the list of attendees 
-    client_id: [{
-        type: mongoose.Schema.Types.Number, // or ObjectID
-        ref: 'primaryData'
-    }]
+    attendees: {
+        type: [Number],
+        unique: true
+    }
 }, {
     collection: 'eventData'
 });
