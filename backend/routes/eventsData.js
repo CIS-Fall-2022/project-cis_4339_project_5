@@ -65,7 +65,7 @@ router.get("/client/:id", (req, res, next) => {
     );
 });
 
-//POST
+//POST new event
 router.post("/", (req, res, next) => { 
     eventdata.create( 
         req.body, 
@@ -79,7 +79,7 @@ router.post("/", (req, res, next) => {
     );
 });
 
-//PUT
+//PUT update event information by id 
 router.put("/:id", (req, res, next) => {
     eventdata.findOneAndUpdate(
         { _id: req.params.id },
@@ -95,7 +95,7 @@ router.put("/:id", (req, res, next) => {
 });
 
 //Lauren 
-//DELETE for the intake form
+//DELETE endpoint for an event
 router.delete("/:id", (req,res,next)=>{
     eventdata.deleteOne(
         {_id:req.params.id}, 
@@ -116,7 +116,7 @@ router.delete("/:id", (req,res,next)=>{
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
     eventdata.find( 
-        { event_id: req.params.id, attendees: req.body.client_id }, 
+        {event_id: req.params.id, attendees: req.body.client_id }, 
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -144,7 +144,7 @@ router.put("/addAttendee/:id", (req, res, next) => {
 });
 
 //Lauren
-//GET for event history for past 2 months
+//GET for event history for past 2 months with the list of attendees
 router.get("/search_2_months/", (req,res,next)=>{
     let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gt:'2022-08-03'}}]};
     eventdata.find(

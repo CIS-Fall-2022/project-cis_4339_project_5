@@ -2,7 +2,7 @@ const uuid = require('uuid');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-//collection for intakeData
+//collection for intakeData for clients includes the embedded address object schema
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     client_id: {
@@ -59,7 +59,7 @@ let primaryDataSchema = new Schema({
 
 
 
-//collection for eventData
+//collection for eventData includes embedded address object schema
 let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     event_id: {

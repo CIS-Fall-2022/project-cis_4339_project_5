@@ -55,10 +55,36 @@ router.get("/search/", (req, res, next) => {
     );
 });
 
+//GET clients off of their number
+// http://localhost:3000/primaryData/getnum/8329412894
+router.get("/getnum/:nums", (req, res, next) => { 
+    let dbQuery = "";
+    dbQuery = { phoneNumbers: { "$all" : req.params.nums} } 
+    // console.log(req.params.nums)
+    // console.log(dbQuery)
+    primarydata.find(dbQuery , 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
+
 //GET events for a single client
 router.get("/events/:id", (req, res, next) => { 
-    
-});
+    eventdata.find(
+    { attendees: req.params.id },
+    (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    })}
+);
 
 //POST
 router.post("/", (req, res, next) => { 
@@ -93,7 +119,7 @@ router.put("/:id", (req, res, next) => {
 });
 
 //Lauren 
-//DELETE for the intake form
+//DELETE for the intake form, which remvoes a client based on the _id 
 router.delete("/:id", (req,res,next)=>{
     primarydata.deleteOne(
         {_id:req.params.id}, 
