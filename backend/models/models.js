@@ -102,10 +102,9 @@ let eventDataSchema = new Schema({
         type: String,
     },
     // acts as the list of attendees 
-    attendees: {
-        type: [Number],
-        unique: true
-    }
+    attendees: [{
+        type: Number,
+    }]
 }, {
     collection: 'eventData'
 });

@@ -20,6 +20,7 @@ router.get("/", (req, res, next) => {
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => { 
     organization.find({ org_id: req.params.id }, (error, data) => {
+        console.log(req.params.id)
         if (error) {
             return next(error)
         } else {
@@ -30,6 +31,8 @@ router.get("/id/:id", (req, res, next) => {
 
 //GET entries based on search query
 // http://localhost:3000/organizationData/search/?org_id=3&searchBy=id
+// http://localhost:3000/organizationData/search/?org_name=Shell&searchBy=name
+
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {

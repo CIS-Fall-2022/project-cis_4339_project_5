@@ -112,7 +112,7 @@ router.delete("/:id", (req,res,next)=>{
 
 
 //PUT add attendee to event using client ID
-//PUT add attendee to event using clinetID
+
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
     eventdata.find( 

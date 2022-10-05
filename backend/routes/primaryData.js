@@ -107,4 +107,31 @@ router.delete("/:id", (req,res,next)=>{
     );
 });
 
+
+
+
+//GET clients off of their number
+// http://localhost:3000/primaryData/getnum/8329412894
+router.get("/getnum/:nums", (req, res, next) => { 
+    let dbQuery = "";
+    dbQuery = { phoneNumbers: { "$all" : req.params.nums} } 
+    // console.log(req.params.nums)
+    // console.log(dbQuery)
+    primarydata.find(dbQuery , 
+        (error, data) => { 
+            if (error) {
+                return next(error);
+            } else {
+                res.json(data);
+            }
+        }
+    );
+});
+
+
+
+
+
+
+
 module.exports = router;
