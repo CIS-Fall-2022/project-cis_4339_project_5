@@ -93,7 +93,7 @@ router.put("/:id", (req, res, next) => {
 });
 
 //Lauren 
-//DELETE for the intake form
+//DELETE for the intake form, which remvoes a client based on the _id 
 router.delete("/:id", (req,res,next)=>{
     primarydata.deleteOne(
         {_id:req.params.id}, 

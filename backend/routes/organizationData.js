@@ -4,7 +4,7 @@ const router = express.Router();
 //importing data model schemas
 let organization = require("../models/organization"); 
 
-//GET all entries
+//GET all organization entries
 router.get("/", (req, res, next) => { 
     organization.find( 
         (error, data) => {
@@ -17,9 +17,9 @@ router.get("/", (req, res, next) => {
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
-//GET single entry by ID
-router.get("/id/:id", (req, res, next) => { 
-    organization.find({ org_id: req.params.id }, (error, data) => {
+//GET single organzation information by providing the object _id for the organization
+router.get("/:id", (req, res, next) => { 
+    organization.find({_id: req.params.id }, (error, data) => {
         if (error) {
             return next(error)
         } else {
@@ -52,7 +52,7 @@ router.get("/search/", (req, res, next) => {
 });
 
 
-//POST method
+//POST method to add new organization
 router.post("/", (req, res, next) => { 
     organization.create( 
         req.body, 
@@ -66,7 +66,7 @@ router.post("/", (req, res, next) => {
     );
 });
 
-// PUT Method
+// PUT Method to update any information about an organization 
 router.put("/:id", (req, res, next) => {
     organization.findOneAndUpdate(
         { _id: req.params.id },
@@ -81,7 +81,7 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
-// delete method
+// delete method that deletes an organization
 router.delete("/id/:id", (req, res, next) => { 
     organization.deleteOne({ org_id: req.params.id }, (error, data) => {
         if (error) {
