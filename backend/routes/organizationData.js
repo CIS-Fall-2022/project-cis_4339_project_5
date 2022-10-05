@@ -17,19 +17,12 @@ router.get("/", (req, res, next) => {
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
-//GET single organzation information by providing the object _id for the organization
-router.get("/:id", (req, res, next) => { 
-    organization.find({_id: req.params.id }, (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data)
-        }
-    })
-});
+
 
 //GET entries based on search query
 // http://localhost:3000/organizationData/search/?org_id=3&searchBy=id
+// http://localhost:3000/organizationData/search/?org_name=Shell&searchBy=name
+
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
