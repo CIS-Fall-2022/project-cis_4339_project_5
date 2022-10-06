@@ -120,7 +120,8 @@ router.delete("/:id", (req,res,next)=>{
 
 
 
-//PUT add attendee to event using client ID
+//PUT add attendee to event using client id 
+// event is placed into the url
 
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
@@ -166,11 +167,15 @@ router.get("/search_2_months/", (req,res,next)=>{
         if (error) {
             return next(error);
         } else {
-            res.json(data);
+        
+            res.json(data);   
         }
     }
 )
 });
+
+
+
 
 
 module.exports = router;

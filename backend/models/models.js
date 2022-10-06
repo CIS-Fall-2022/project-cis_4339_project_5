@@ -103,7 +103,7 @@ let eventDataSchema = new Schema({
     },
     // acts as the list of attendees 
     attendees: [{
-        type: Number,
+        type: Number
     }]
 }, {
     collection: 'eventData'
