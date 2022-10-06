@@ -146,7 +146,8 @@ router.put("/addAttendee/:id", (req, res, next) => {
 //Lauren
 //GET for event history for past 2 months with the list of attendees
 router.get("/search_2_months/", (req,res,next)=>{
-    let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gt:'2022-08-03'}}]};
+    //new Date() is the current date, which allows us to modify the date to be 60 days ago including today
+    let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gte:new Date() -1000*3600*24*61}}]};
     eventdata.find(
         dbQuery,{eventName:1,attendees:1},
         (error, data) => { 
