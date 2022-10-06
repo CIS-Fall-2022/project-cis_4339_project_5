@@ -17,6 +17,18 @@ router.get("/", (req, res, next) => {
     ).sort({ 'updatedAt': -1 }).limit(10);
 });
 
+//GET single entry by ID
+router.get("/id/:id", (req, res, next) => { 
+    organization.find({ org_id: req.params.id }, (error, data) => {
+        console.log(req.params.id)
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
 
 
 //GET single entry by ID
