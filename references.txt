@@ -2,3 +2,6 @@ https://stackoverflow.com/questions/2943222/find-objects-between-two-dates-mongo
 https://dirask.com/posts/JavaScript-subtract-months-from-date-pVmgGD#:~:text=In%20this%20article%2C%20we%20would%20like%20to%20show,2%29%3B%20%2F%2F%20subtracted%202%20months%20from%20existing%20date
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
 https://www.w3schools.com/jsref/jsref_tostring_number.asp
+https://www.codegrepper.com/code-examples/typescript/check+if+key+value+exists+in+json+object+javascript
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join

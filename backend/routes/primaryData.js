@@ -182,25 +182,50 @@ router.get("/search_attendee_2_months/", (req,res,next)=>{
             // console.log(data);
             // lam test 
             let count = []
-            for (const i in data) {
-                // count.push(i); // 0,1,2
-                // count.push(data[i]["attendees"]);
-                for (const x in data[i]["attendees"]) {
-                    count.push(x); // 
-                  }
+            var dict = {}
+
+            // loops through the obj to grab the values within the objects
+            // dict drabs the distinct values tied to an event
+            // the array act as a counter to count the total num of attendees over all
+
+            for (const i in data) {   
+                    // count.push(x)
+                for (const [key, value] of Object.entries(data[i]["attendees"])) {
+                    // console.log(key, value);
+                    if (dict.hasOwnProperty(data[i]["eventName"])) {
+                        dict[data[i]["eventName"]].push(value)
+                    }
+                    else {
+                        dict[data[i]["eventName"]] = [value]
+                    }
+                    count.push(value)
+                    }
               }
-            // console.log(data[1]);
-            // console.log(data[1]['eventName']);
-            console.log("The number of attendees that signed up for an event during the past two months is:", count.length);
-            let output = "The number of attendees that signed up for an event during the past two months is:" + (count.length).toString()
+
+
+            let test = []
+            // loops through my dict object and then grabs the key and values to form the string within the array test  
+            for (const [key, value] of Object.entries(dict)) {
+            test.push("The number of attendees for the" + key + " is " + (dict[key].length).toString());
+            }
+            // console.log(test)
+            // joins the string and then concatenating that string to another string
+            let output_string = (test.join());
+            let output = "This report returns the number of attendees who have signed for an event that is taking place between now and two months prior. " + output_string + ". The number of attendees that signed up for an event during the past two months is: " 
+            + (count.length).toString()  
             res.json(output);
-
-
-            
         }
     }
 )
 });
+
+
+
+
+
+
+
+
 
 
 
