@@ -4,6 +4,15 @@ const router = express.Router();
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
+//  https://dirask.com/posts/JavaScript-subtract-months-from-date-pVmgGD#:~:text=In%20this%20article%2C%20we%20would%20like%20to%20show,2%29%3B%20%2F%2F%20subtracted%202%20months%20from%20existing%20date
+const subtractMonths = (date, months) => {
+    const result = new Date(date);
+    result.setMonth(result.getMonth() - months);
+    return result;
+  };
+
+
+
 //GET all entries
 router.get("/", (req, res, next) => { 
     eventdata.find( 
@@ -143,20 +152,25 @@ router.put("/addAttendee/:id", (req, res, next) => {
 
 });
 
-//Lauren
+//Lam and Lauren
 //GET for event history for past 2 months with the list of attendees
 router.get("/search_2_months/", (req,res,next)=>{
-    let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gt:'2022-08-03'}}]};
-    eventdata.find(
-        dbQuery,{eventName:1,attendees:1},
-        (error, data) => { 
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
+
+    eventdata.find({
+    date: {
+        $gte: subtractMonths(new Date(), 2),
+        $lte: new Date()
+    }}
+    ,{eventName:1,attendees:1,date:1},
+    (error, data) => { 
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
         }
-    )
+    }
+)
 });
+
 
 module.exports = router;

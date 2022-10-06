@@ -134,8 +134,6 @@ router.delete("/:id", (req,res,next)=>{
 });
 
 
-
-
 //GET clients off of their number
 // http://localhost:3000/primaryData/getnum/8329412894
 router.get("/getnum/:nums", (req, res, next) => { 
@@ -156,6 +154,22 @@ router.get("/getnum/:nums", (req, res, next) => {
 
 
 
+// Lam 
+// count of employees 
+
+// router.get("/search_2_months/", (req,res,next)=>{
+//     let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gt:'2022-08-03'}}]};
+//     eventdata.find(
+//         dbQuery,{eventName:1,attendees:1},
+//         (error, data) => { 
+//             if (error) {
+//                 return next(error);
+//             } else {
+//                 res.json(data);
+//             }
+//         }
+//     )
+// });
 
 
 

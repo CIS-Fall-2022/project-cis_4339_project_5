@@ -19,6 +19,18 @@ router.get("/", (req, res, next) => {
 
 
 
+//GET single entry by ID
+router.get("/id/:id", (req, res, next) => { 
+    organization.find({ org_id: req.params.id }, (error, data) => {
+        console.log(req.params.id)
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
 //GET entries based on search query
 // http://localhost:3000/organizationData/search/?org_id=3&searchBy=id
 // http://localhost:3000/organizationData/search/?org_name=Shell&searchBy=name
