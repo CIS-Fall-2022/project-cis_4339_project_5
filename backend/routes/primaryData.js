@@ -5,6 +5,15 @@ const router = express.Router();
 let { primarydata } = require("../models/models"); 
 let { eventdata } = require("../models/models"); 
 
+
+//  https://dirask.com/posts/JavaScript-subtract-months-from-date-pVmgGD#:~:text=In%20this%20article%2C%20we%20would%20like%20to%20show,2%29%3B%20%2F%2F%20subtracted%202%20months%20from%20existing%20date
+const subtractMonths = (date, months) => {
+    const result = new Date(date);
+    result.setMonth(result.getMonth() - months);
+    return result;
+  };
+
+
 //GET all entries
 router.get("/", (req, res, next) => { 
     primarydata.find( 
@@ -155,21 +164,44 @@ router.get("/getnum/:nums", (req, res, next) => {
 
 
 // Lam 
-// count of employees 
+// count of cilents who signed up for events past two months
+router.get("/search_attendee_2_months/", (req,res,next)=>{
 
-// router.get("/search_2_months/", (req,res,next)=>{
-//     let dbQuery = {$and:[{date:{$lt:new Date()}},{date:{$gt:'2022-08-03'}}]};
-//     eventdata.find(
-//         dbQuery,{eventName:1,attendees:1},
-//         (error, data) => { 
-//             if (error) {
-//                 return next(error);
-//             } else {
-//                 res.json(data);
-//             }
-//         }
-//     )
-// });
+    eventdata.find({
+    date: {
+        $gte: subtractMonths(new Date(), 2),
+        $lte: new Date()
+    }}
+    ,{eventName:1,attendees:1,date:1},
+    (error, data) => { 
+        if (error) {
+            return next(error);
+        } else {
+        
+            
+            // console.log(data);
+            // lam test 
+            let count = []
+            for (const i in data) {
+                // count.push(i); // 0,1,2
+                // count.push(data[i]["attendees"]);
+                for (const x in data[i]["attendees"]) {
+                    count.push(x); // 
+                  }
+              }
+            // console.log(data[1]);
+            // console.log(data[1]['eventName']);
+            console.log("The number of attendees that signed up for an event during the past two months is:", count.length);
+            let output = "The number of attendees that signed up for an event during the past two months is:" + (count.length).toString()
+            res.json(output);
+
+
+            
+        }
+    }
+)
+});
+
 
 
 
