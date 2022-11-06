@@ -27,8 +27,9 @@ mongoose
 //declare port number for the api
 // const PORT = process.env.PORT || 3000;
 const PORT = process.env.PORT ;
-
+const ORG_ID = process.env.ORG_ID;
 console.log(PORT)
+console.log(ORG_ID)
 
 
 

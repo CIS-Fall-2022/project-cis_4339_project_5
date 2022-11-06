@@ -37,9 +37,8 @@ export default {
       // Checks to see if there are any errors in validation
       const isFormCorrect = await this.v$.$validate();
       // If no errors found. isFormCorrect = True then the form is submitted
-      console.log(this.client)
       if (isFormCorrect) {
-        let apiURL = "http://localhost:3000/primaryData/";
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
         axios
           .post(apiURL, this.client)
           .then(() => {
@@ -203,7 +202,7 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
                 v-model="client.phoneNumbers[0].secondaryPhone"
-              />0
+              />
             </label>
           </div>
         </div>

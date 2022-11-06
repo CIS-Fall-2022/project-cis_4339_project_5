@@ -5,7 +5,11 @@ const Schema = mongoose.Schema;
 //collection for intakeData for clients includes the embedded address object schema
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
-   
+    client_id: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     firstName: {
         type: String,
         require: true
@@ -18,24 +22,21 @@ let primaryDataSchema = new Schema({
         required: true
     },
 
+    org_id:{
+        type: mongoose.Schema.Types.Number, // or ObjectID
+        ref: 'organization'
+        
+    },
     email: {
         type: String
     },
-    phoneNumbers: {
-        primaryPhone: {
-            type: Number,
-            required: true
-        },
-        seondaryPhone: 
-        {
-            type: Number,
-          
-        }
-    },
+    phoneNumbers: [{
+        type: Number,
+        required: true
+    }],
     address: {
         line1: {
-            type: String,
-            required: true
+            type: String
         },
         line2: {
             type: String,
@@ -46,11 +47,9 @@ let primaryDataSchema = new Schema({
         },
         county: {
             type: String,
-            required: true
         },
         zip: {
             type: Number,
-            required: true
         }
 }
 }, {
