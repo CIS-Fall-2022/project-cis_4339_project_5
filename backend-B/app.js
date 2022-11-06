@@ -32,8 +32,6 @@ console.log(PORT)
 console.log(ORG_ID)
 
 
-
-
 //setup
 app.use(express.json());
 app.use(morgan("dev"));

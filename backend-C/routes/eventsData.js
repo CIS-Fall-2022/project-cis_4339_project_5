@@ -1,11 +1,6 @@
 const express = require("express");
 const router = express.Router();
 // Lam
-
-//allow using a .env file
-require("dotenv").config();
-
-
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
