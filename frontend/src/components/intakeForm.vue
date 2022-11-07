@@ -47,7 +47,7 @@ export default {
       // If no errors found. isFormCorrect = True then the form is submitted
       console.log(this.client)
       if (isFormCorrect) {
-        let apiURL = "http://localhost:3000/primaryData/";
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
         axios
           .post(apiURL, this.client)
           .then(() => {
