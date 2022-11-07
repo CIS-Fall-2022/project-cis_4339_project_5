@@ -27,10 +27,15 @@ mongoose
 //declare port number for the api
 // const PORT = process.env.PORT || 3000;
 const PORT = process.env.PORT ;
-const ORG_ID = process.env.ORG_ID;
-console.log(PORT)
-console.log(ORG_ID)
 
+const ORG_NAME = process.env.ORG_NAME;
+console.log(PORT)
+console.log(ORG_NAME)
+
+// setting up the enviroment variable to be exported
+var ORG_ID = parseInt(process.env.ORG_ID);
+console.log(ORG_ID)
+module.exports = ORG_ID
 
 
 
@@ -60,3 +65,4 @@ app.use(function (err, req, res, next) {
     err.statusCode = 500;
   res.status(err.statusCode).send(err.message);
 });
+

@@ -5,10 +5,14 @@ const Schema = mongoose.Schema;
 //collection for intakeData for clients includes the embedded address object schema
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
+    org_id:{
+        type: Number,
+        required: true
+    },
    
     firstName: {
         type: String,
-        require: true
+        required: true
     },
     middleName: {
         type: String,
@@ -75,11 +79,11 @@ let eventDataSchema = new Schema({
 
     eventName: {
         type: String,
-        require: true
+        required: true
     },
     services: [{
         type: String,
-        require: true
+        required: true
     }],
     date: {
         type: Date,
