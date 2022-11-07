@@ -185,6 +185,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+                placeholder="XXXXXXXXXX"
                 v-model="client.phoneNumbers.primaryPhone"
               />
               <span class="text-black" v-if="v$.client.phoneNumbers.primaryPhone.$error">
@@ -204,6 +205,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[0-9]{3}[0-9]{3}[0-9]{4}"
+                placeholder="XXXXXXXXXX"
                 v-model="client.phoneNumbers.secondaryPhone"
               />
             </label>
