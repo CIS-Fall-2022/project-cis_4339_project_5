@@ -24,11 +24,14 @@ let primaryDataSchema = new Schema({
     phoneNumbers: {
         primaryPhone: {
             type: Number,
-            required: true
+            required: true,
+            unique: true
+
         },
         seondaryPhone: 
         {
             type: Number,
+            unique: true
           
         }
     },
