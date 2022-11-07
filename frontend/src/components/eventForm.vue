@@ -198,9 +198,12 @@
   </main>
 </template>
 <script>
+
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import axios from "axios";
+
+
 export default {
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) };
@@ -219,7 +222,7 @@ export default {
           county: "",
           zip: "",
         },
-        description: "",
+        description: ""
       },
     };
   },
@@ -236,7 +239,8 @@ export default {
           .then(() => {
             alert("Event has been added.");
             this.$router.push("/findEvents");
-            this.client = {
+            this.event = {
+          
               eventName: "",
               services: [],
               date: "",
@@ -247,7 +251,8 @@ export default {
                 county: "",
                 zip: "",
               },
-              description: "",
+              description: ""
+        
             };
             this.checkedServices = [];
           })

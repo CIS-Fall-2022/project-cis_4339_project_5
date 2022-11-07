@@ -7,9 +7,14 @@ let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
     org_id:{
         type: Number,
-        required: true
+        default:  parseInt(process.env.ORG_ID)
     },
-   
+
+    org_name:{
+        type: String,
+        default:process.env.ORG_NAME
+    },
+
     firstName: {
         type: String,
         required: true
@@ -35,7 +40,7 @@ let primaryDataSchema = new Schema({
         seondaryPhone: 
         {
             type: Number,
-            unique: true
+            
           
         }
     },
@@ -70,13 +75,7 @@ let primaryDataSchema = new Schema({
 //collection for eventData includes embedded address object schema
 let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
-    event_id: {
-        type: Number,
-        require: true,
-        unique: true
-
-    },
-
+    
     eventName: {
         type: String,
         required: true
@@ -111,7 +110,7 @@ let eventDataSchema = new Schema({
     },
     // acts as the list of attendees 
     attendees: [{
-        type: Number
+        type: String
     }]
 }, {
     collection: 'eventData'

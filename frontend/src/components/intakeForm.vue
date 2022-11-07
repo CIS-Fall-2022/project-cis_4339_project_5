@@ -5,9 +5,6 @@ import axios from "axios";
 
 // Lam 
 
-var ORG_ID = 1697834
-console.log(ORG_ID)
-console.log(ORG_ID)
 export default {
   
   setup() {
@@ -19,7 +16,7 @@ export default {
   data() {
     return {
       client: {
-        org_id: ORG_ID,
+
         firstName: "",
         middleName: "",
         lastName: "",
@@ -47,14 +44,14 @@ export default {
       // If no errors found. isFormCorrect = True then the form is submitted
       console.log(this.client)
       if (isFormCorrect) {
-        let apiURL = "http://localhost:3000/primaryData/";
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
         axios
           .post(apiURL, this.client)
           .then(() => {
             alert("Client has been succesfully added.");
             this.$router.push("/findclient");
             this.client = {
-              obj_id: ORG_ID,
+    
               firstName: "",
               middleName: "",
               lastName: "",

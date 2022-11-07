@@ -203,7 +203,8 @@ router.get("/search_attendee_2_months/", (req,res,next)=>{
                     }
               }
 
-
+            console.log(count)
+            console.log(dict)
             let test = []
             // loops through my dict object and then grabs the key and values to form the string within the array test  
             for (const [key, value] of Object.entries(dict)) {
