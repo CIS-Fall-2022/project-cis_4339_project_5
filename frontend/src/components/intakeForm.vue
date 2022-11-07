@@ -5,9 +5,6 @@ import axios from "axios";
 
 // Lam 
 
-var ORG_ID = 1697834
-console.log(ORG_ID)
-console.log(ORG_ID)
 export default {
   
   setup() {
@@ -19,7 +16,7 @@ export default {
   data() {
     return {
       client: {
-        org_id: ORG_ID,
+
         firstName: "",
         middleName: "",
         lastName: "",
@@ -54,7 +51,7 @@ export default {
             alert("Client has been succesfully added.");
             this.$router.push("/findclient");
             this.client = {
-              obj_id: ORG_ID,
+    
               firstName: "",
               middleName: "",
               lastName: "",

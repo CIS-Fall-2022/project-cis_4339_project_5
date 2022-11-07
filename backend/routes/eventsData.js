@@ -125,20 +125,20 @@ router.delete("/:id", (req,res,next)=>{
 
 
 
-//PUT add attendee to event using client id 
+//PUT add attendee to event using client id which is there object_id
 // event is placed into the url
 
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
     eventdata.find( 
-        {event_id: req.params.id, attendees: req.body.client_id }, 
+        {_id: req.params.id, attendees: req.body.client_id }, 
         (error, data) => { 
             if (error) {
                 return next(error);
             } else {
                 if (data.length == 0) {
                     eventdata.updateOne(
-                        { event_id: req.params.id }, 
+                        { _id: req.params.id }, 
                         { $push: { attendees: req.body.client_id } },
                         (error, data) => {
                             if (error) {
