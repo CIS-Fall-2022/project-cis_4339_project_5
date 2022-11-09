@@ -1,102 +1,3 @@
-<script>
-import useVuelidate from "@vuelidate/core";
-import { required, email, alpha, numeric } from "@vuelidate/validators";
-import axios from "axios";
-
-// Lam 
-
-export default {
-  
-  setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) };
-  },
-  mounted() {
-    window.scrollTo(0, 0);
-  },
-  data() {
-    return {
-      client: {
-
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        email: "",
-        phoneNumbers: 
-          {
-            primaryPhone: "",
-            secondaryPhone: "",
-          },
-        
-        address: {
-          line1: "",
-          line2: "",
-          city: "",
-          county: "",
-          zip: "",
-        },
-      },
-    };
-  },
-  methods: {
-    async handleSubmitForm() {
-      // Checks to see if there are any errors in validation
-      const isFormCorrect = await this.v$.$validate();
-      // If no errors found. isFormCorrect = True then the form is submitted
-      console.log(this.client)
-      if (isFormCorrect) {
-        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
-        axios
-          .post(apiURL, this.client)
-          .then(() => {
-            alert("Client has been succesfully added.");
-            this.$router.push("/findclient");
-            this.client = {
-    
-              firstName: "",
-              middleName: "",
-              lastName: "",
-              email: "",
-              phoneNumbers: 
-                {
-                  primaryPhone: "",
-                  seondaryPhone: "",
-                },
-              
-              address: {
-                line1: "",
-                line2: "",
-                city: "",
-                county: "",
-                zip: "",
-              },
-            };
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    },
-  },
-  // sets validations for the various data properties
-  validations() {
-    return {
-      client: {
-        firstName: { required, alpha },
-        lastName: { required, alpha },
-        email: { email },
-        address: {
-          city: { required },
-        },
-        phoneNumbers: 
-          {
-            primaryPhone: { required, numeric },
-          },
-        
-      },
-    };
-  },
-};
-</script>
 <template>
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Client Intake Form</h1>
@@ -295,3 +196,101 @@ export default {
     </div>
   </main>
 </template>
+<script>
+import useVuelidate from "@vuelidate/core";
+import { required, email, alpha, numeric } from "@vuelidate/validators";
+import axios from "axios";
+
+// Lam 
+
+export default {
+  
+  setup() {
+    return { v$: useVuelidate({ $autoDirty: true }) };
+  },
+  mounted() {
+    window.scrollTo(0, 0);
+  },
+  data() {
+    return {
+      client: {
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        email: "",
+        phoneNumbers: 
+          {
+            primaryPhone: "",
+            secondaryPhone: "",
+          },
+        
+        address: {
+          line1: "",
+          line2: "",
+          city: "",
+          county: "",
+          zip: "",
+        },
+      },
+    };
+  },
+  methods: {
+    async handleSubmitForm() {
+      // Checks to see if there are any errors in validation
+      const isFormCorrect = await this.v$.$validate();
+      // If no errors found. isFormCorrect = True then the form is submitted
+      console.log(this.client)
+      if (isFormCorrect) {
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata`;
+        axios
+          .post(apiURL, this.client)
+          .then(() => {
+            alert("Client has been succesfully added.");
+            this.$router.push("/findclient");
+            this.client = {
+    
+              firstName: "",
+              middleName: "",
+              lastName: "",
+              email: "",
+              phoneNumbers: 
+                {
+                  primaryPhone: "",
+                  seondaryPhone: "",
+                },
+              
+              address: {
+                line1: "",
+                line2: "",
+                city: "",
+                county: "",
+                zip: "",
+              },
+            };
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    },
+  },
+  // sets validations for the various data properties
+  validations() {
+    return {
+      client: {
+        firstName: { required },
+        lastName: { required },
+        email: { email },
+        address: {
+          city: { required },
+        },
+        phoneNumbers: 
+          {
+            primaryPhone: { required, numeric },
+          },
+        
+      },
+    };
+  },
+};
+</script>
