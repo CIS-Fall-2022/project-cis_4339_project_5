@@ -222,7 +222,8 @@ export default {
           county: "",
           zip: "",
         },
-        description: ""
+        description: "",
+        attendees: []
       },
     };
   },
@@ -251,7 +252,8 @@ export default {
                 county: "",
                 zip: "",
               },
-              description: ""
+              description: "",
+              attendees: []
         
             };
             this.checkedServices = [];

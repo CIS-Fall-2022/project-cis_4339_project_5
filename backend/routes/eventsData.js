@@ -124,7 +124,7 @@ router.delete("/:id", (req,res,next)=>{
 });
 
 
-
+// Lam Dang
 //PUT add attendee to event using client id which is there object_id
 // event is placed into the url
 

@@ -110,7 +110,8 @@ let eventDataSchema = new Schema({
     },
     // acts as the list of attendees 
     attendees: [{
-        type: String
+        type: String,
+        default: null
     }]
 }, {
     collection: 'eventData'

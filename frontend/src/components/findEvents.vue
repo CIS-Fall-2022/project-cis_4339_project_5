@@ -55,6 +55,12 @@
       </div>
     </div>
 
+
+
+
+
+
+    
     <hr class="mt-10 mb-10" />
     <!-- Display Found Data -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
@@ -138,6 +144,7 @@ export default {
       });
     },
     editEvent(eventID) {
+      console.log(eventID)
       this.$router.push({ name: "eventdetails", params: { id: eventID } });
     },
   },
