@@ -25,11 +25,12 @@ let organizationSchema = new Schema({
 
 }, {
 
-    collection: 'organization'
+    collection: 'organizationData'
 
 });
 
 
-
-module.exports = mongoose.model('organization', organizationSchema);
+const organizationdata = mongoose.model('organizationData', organizationSchema);
+module.exports = { organizationdata }
+//module.exports = mongoose.model('organization', organizationSchema);
 // package the models in an object to export 

@@ -1,20 +1,21 @@
 const express = require("express");
 const router = express.Router();
+require("dotenv").config();
 // Lam
 //importing data model schemas
-let organization = require("../models/organization"); 
+let {organizationdata} = require("../models/organization"); 
 
-//GET all organization entries
+//GET organization name per instance
 router.get("/", (req, res, next) => { 
-    organization.find( 
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
+    organizationdata.find({organizationID: process.env.ORG_NAME }, (error, data) => {
+        console.log(process.env.ORG_NAME)
+        if (error) {
+            return next(error)
+        } else {
+            res.json(process.env.ORG_NAME)
         }
-    ).sort({ 'updatedAt': -1 }).limit(10);
+    }
+    ).sort({'updatedAt':-1}).limit(10);
 });
 
 //GET single entry by ID

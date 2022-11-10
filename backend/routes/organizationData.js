@@ -1,47 +1,53 @@
 const express = require("express");
 const router = express.Router();
+require("dotenv").config();
 // Lam
 //importing data model schemas
-let organization = require("../models/organization"); 
+let {organizationdata}= require("../models/organization"); 
 
-//GET all organization entries
+
+
+//GET single entry by ID
+router.get("/id/:id", (req, res, next) => { 
+    organization.find({ org_id: req.params.id }, (error, data) => {
+        console.log(req.params.id)
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
+
+
+//GET single entry by ID
+router.get("/id/:id", (req, res, next) => { 
+    organization.find({ org_id: req.params.id }, (error, data) => {
+        console.log(req.params.id)
+        if (error) {
+            return next(error)
+        } else {
+            res.json(data)
+        }
+    })
+});
+
+
+//GET organization name per instance
 router.get("/", (req, res, next) => { 
-    organization.find( 
-        (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                res.json(data);
-            }
-        }
-    ).sort({ 'updatedAt': -1 }).limit(10);
-});
-
-//GET single entry by ID
-router.get("/id/:id", (req, res, next) => { 
-    organization.find({ org_id: req.params.id }, (error, data) => {
-        console.log(req.params.id)
+    organizationdata.find({organizationID: process.env.ORG_NAME }, (error, data) => {
+        console.log(process.env.ORG_NAME)
         if (error) {
             return next(error)
         } else {
-            res.json(data)
+            res.json(process.env.ORG_NAME)
         }
-    })
+    }
+    ).sort({'updatedAt':-1}).limit(10);
 });
 
 
-
-//GET single entry by ID
-router.get("/id/:id", (req, res, next) => { 
-    organization.find({ org_id: req.params.id }, (error, data) => {
-        console.log(req.params.id)
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data)
-        }
-    })
-});
 
 //GET entries based on search query
 // http://localhost:3000/organizationData/search/?org_id=3&searchBy=id
