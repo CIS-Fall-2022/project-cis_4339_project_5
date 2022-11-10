@@ -48,7 +48,8 @@
           background: linear-gradient(250deg, #C8102E 70%, #efecec 50.6%);
         "
       >
-        <h1 class="mr-20 text-3xl text-white">Dataplatform</h1>
+      <!--This line replaces the 'Dataplatform' with the actual organization name-->
+        <h1 class="mr-20 text-3xl text-white">{{results}}</h1>
       </section>
       <div>
         <router-view></router-view>
@@ -58,7 +59,18 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+  data() {
+    return{
+    results:[]
+    }
+  },
+  mounted(){
+    axios.get('http://localhost:3001/organizationData/').then(response =>
+    this.results = response.data
+    )},
   name: "App",
 };
 </script>

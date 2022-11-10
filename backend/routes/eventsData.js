@@ -20,7 +20,7 @@ const subtractMonths = (date, months) => {
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    eventdata.find( 
+    eventdata.find(
         (error, data) => {
             if (error) {
                 return next(error);
