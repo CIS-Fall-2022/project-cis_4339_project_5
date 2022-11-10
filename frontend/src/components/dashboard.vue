@@ -6,19 +6,16 @@
 
 <!-- This is the part of the code where i am going to design my graph-->
 
-    <section class="container">
 
-  
-      <div class="column">
-        <h3> Needa test to send in the bar chart component from another file in order to get this part to work</h3>
-        <div>
+<div class="column">
+     
+      
           <div>
-
-            <EnrollmentBar
+            <AttendeeBar
               v-if="!loading && !error"
-              :label="labels"
-              :chart-data="enrolled"
-            ></EnrollmentBar>
+              :label="x_axis"
+              :chartData="y_axis"
+            ></AttendeeBar>
 
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
@@ -49,20 +46,7 @@
             <br />
           </div>
         </div>
-      </div>
-   
-  </section>
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
 
@@ -108,11 +92,14 @@
 </template>
 
 <script>
-import { DateTime } from "luxon";
+
 import axios from "axios";
+import AttendeeBar from "@/components/BarChartComponent.vue";
 
 export default {
-
+  components: {
+    AttendeeBar
+  },
 
   data() {
     return {
@@ -132,15 +119,13 @@ export default {
 methods: {
 
 async fetchData() {
-      try {
-        this.error = null;
+   
+  try {
+      this.error = null;
         this.loading = true;
 
-        let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/search_attendee_2_months/`;
-        this.queryData = [];
-        axios.get(apiURL).then((resp) => {
-        this.queryData = resp.data;
-    });
+
+
 
     // this api returns a josn object for chart.js to use to create the graph
         const url = import.meta.env.VITE_ROOT_API + "/primaryData/search_attendee_chart/"
@@ -149,6 +134,10 @@ async fetchData() {
         //"re-organizing" - mapping json from the response
         this.x_axis = response.data.map((item) => item.eventName);
         this.y_axis = response.data.map((item) => item.attendees);
+
+
+      
+
 
 
 
@@ -178,6 +167,15 @@ async fetchData() {
   },
 
   mounted() {
+
+    let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/search_attendee_2_months/`;
+        this.queryData = [];
+        axios.get(apiURL).then((resp) => {
+        this.queryData = resp.data;
+    });
+
+
+   
     this.fetchData();
     window.scrollTo(0, 0);
   },
