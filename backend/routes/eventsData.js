@@ -131,7 +131,7 @@ router.delete("/:id", (req,res,next)=>{
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
     eventdata.find( 
-        {_id: req.params.id, attendees: req.body.client_id }, 
+        {_id: req.params.id, attendees: req.body._id }, 
         (error, data) => { 
             if (error) {
                 return next(error);
@@ -139,10 +139,9 @@ router.put("/addAttendee/:id", (req, res, next) => {
                 if (data.length == 0) {
                     eventdata.updateOne(
                         { _id: req.params.id }, 
-                        { $push: { attendees: req.body.client_id } },
+                        { $push: { attendees: req.body._id } },
                         (error, data) => {
                             if (error) {
-                                consol
                                 return next(error);
                             } else {
                                 res.send('Client is added to event.');
