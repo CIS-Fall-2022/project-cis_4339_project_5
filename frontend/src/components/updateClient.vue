@@ -108,7 +108,7 @@ export default {
       this.eventsChosen.forEach((event) => {
         let apiURL =
           import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
-        axios.put(apiURL, { attendee: this.$route.params.id }).then(() => {
+        axios.put(apiURL, { _id : this.$route.params.id }).then(() => {
           this.clientEvents = [];
           axios
             .get(
