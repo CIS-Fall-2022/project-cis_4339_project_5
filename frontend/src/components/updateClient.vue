@@ -23,12 +23,11 @@ export default {
         middleName: "",
         lastName: "",
         email: "",
-        phoneNumbers: [
+        phoneNumbers: 
           {
             primaryPhone: "",
             secondaryPhone: "",
           },
-        ],
         address: {
           line1: "",
           line2: "",
@@ -150,6 +149,11 @@ export default {
         firstName: { required, alpha },
         lastName: { required, alpha },
         email: { email },
+        address: {
+          city: { required },
+          county: { required },
+          zip: { required }
+        },
         phoneNumbers: [
           {
             primaryPhone: { required, numeric },
