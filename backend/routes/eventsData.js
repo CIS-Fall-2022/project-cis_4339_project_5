@@ -112,7 +112,7 @@ router.put("/:id", (req, res, next) => {
 //DELETE endpoint for an event
 router.delete("/:id", (req,res,next)=>{
     eventdata.deleteOne(
-        {_id:req.params.id}, 
+        {_id : req.params.id}, 
         (error,data)=>{
             if (error) {
                 return next(error);
