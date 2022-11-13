@@ -118,6 +118,9 @@ export default {
       });
     }
     },
+    refreshPage(){
+      window.location.reload();
+    },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =
@@ -403,7 +406,7 @@ export default {
             ></VueMultiselect>
             <div class="flex justify-between">
               <button
-                @click="addToEvent"
+                @click="addToEvent(); refreshPage()"
                 type="submit"
                 class="mt-5 bg-red-700 text-white rounded"
               >Add Client to Events</button>
