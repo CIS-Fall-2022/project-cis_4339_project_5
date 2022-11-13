@@ -15,8 +15,9 @@ export default {
     return {
       //for multi select
       eventsChosen: [],
-      //for multi select event Data
       eventData: [],
+      //for multi select event Data
+      // eventData: [],
       // Client Data
       client: {
         firstName: "",
@@ -38,6 +39,8 @@ export default {
       },
       // list of events shown in table
       clientEvents: [],
+      // this needs to be updated as well
+     
     };
   },
   mounted() {
@@ -55,10 +58,8 @@ export default {
         this.client.middleName = data.middleName;
         this.client.lastName = data.lastName;
         this.client.email = data.email;
-        this.client.phoneNumbers.primaryPhone =
-          data.phoneNumbers.primaryPhone;
-        this.client.phoneNumbers.secondaryPhone =
-          data.phoneNumbers.secondaryPhone;
+        this.client.phoneNumbers.primaryPhone = data.phoneNumbers.primaryPhone;
+        this.client.phoneNumbers.secondaryPhone = data.phoneNumbers.secondaryPhone;
         this.client.address.line1 = data.address.line1;
         this.client.address.line2 = data.address.line2;
         this.client.address.city = data.address.city;
@@ -125,6 +126,7 @@ export default {
         let apiURL =
           import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
         axios.put(apiURL, { _id : this.$route.params.id }).then(() => {
+
           this.clientEvents = [];
           axios
             .get(
@@ -136,11 +138,17 @@ export default {
               for (let i = 0; i < data.length; i++) {
                 this.clientEvents.push({
                   eventName: data[i].eventName,
+                  eventDate: data[i].eventDate,
                 });
               }
+              
             });
         });
       });
+
+      alert("Client is now registered for the event");
+      this.$router.go(this.$router.currentRoute)
+
     },
   },
   validations() {
