@@ -104,14 +104,19 @@ export default {
         });
       });
     },
+    //Method called when button is clicked in the frontend, using AXIOS delete with the correct API URL for
+    //the backend delete client route. But, first the client must accept the confirm box that appears when deleting a client.
+    //There is also an alert box that appears once the action is complete to help frontend user know what's going on
     deleteClient(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/${this.id}`;
-      axios.delete(apiURL, this.client).then(() => {
-        alert("Client has been deleted");
+      if (window.confirm("Are you sure you want to delete this Client?")) {
+        axios.delete(apiURL, this.client).then(() => {
+          alert("Client has been deleted");
         this.$router.back().catch((error) => {
           console.log(error);
         });
       });
+    }
     },
     addToEvent() {
       this.eventsChosen.forEach((event) => {
@@ -347,6 +352,7 @@ export default {
               class="bg-red-700 text-white rounded"
             >Update Client</button>
           </div>
+          <!--New button for deleting the client in the Client Intake Form, follows the styling of the udate button-->
           <div class="flex justify-between mt-10 mr-20">
             <button
               @click="deleteClient"
