@@ -211,7 +211,7 @@ router.get("/search_attendee_2_months/", (req,res,next)=>{
 });
 
 // Lam 
-// count of cilents who signed up for events past two months
+// count of cilents who signed up for events past two months is formatts it correctly to match the requirements of chart.js
 router.get("/search_attendee_chart/", (req,res,next)=>{
 
     eventdata.find({
@@ -251,7 +251,7 @@ router.get("/search_attendee_chart/", (req,res,next)=>{
                         list.push(dict)
                     }
                     
-            console.log(list)
+            // console.log(list)
                 }
 
             res.json(list);
