@@ -67,9 +67,13 @@
 
           <div></div>
           <!-- form field -->
+          <!--Each input box in the form corresponds to a field that will hold data values
+          in the document in the backend. Those fields that are reqired type in the backend are denoted 
+          with an * so the user is able to tell whic ones they need to fill out -->
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Email</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

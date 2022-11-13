@@ -330,9 +330,12 @@ export default {
     editClient(clientID) {
       this.$router.push({ name: "updateclient", params: { id: clientID } });
     },
+    //this method allows an event to be deleted, it uses the API from the backend via axios to connect the db 
+    //it is able to collect the event id based on the keyword 'this' that retrieves the event id based on the current page being rendered
     deleteEvent(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.delete(apiURL, this.event).then(() => {
+        //this alert box is used to let the frontend viewer know something is happening 
         alert("Event has been deleted");
         this.$router.back().catch((error) => {
           console.log(error);
