@@ -107,15 +107,32 @@ export default {
     //Method called when button is clicked in the frontend, using AXIOS delete with the correct API URL for
     //the backend delete client route. But, first the client must accept the confirm box that appears when deleting a client.
     //There is also an alert box that appears once the action is complete to help frontend user know what's going on
+
+    // Lam I included another api call, whne the comfirmation is hit, the axio will sent both http request to the backend in proper sequence
+    // the removal of the attendee from the events and then removal of the cilent in general, in order to acomphlish this i created another api in the backend that handles the removal 
+    // of attendees
     deleteClient(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/${this.id}`;
+      let apiURL2 = import.meta.env.VITE_ROOT_API + `/primaryData/events/${this.id}`;
       if (window.confirm("Are you sure you want to delete this Client?")) {
+        axios.put(apiURL2, this.client).then(() => {
+  
+          this.$router.back().catch((error) => {
+          console.log(error);
+       
+        });
+      });
+
         axios.delete(apiURL, this.client).then(() => {
           alert("Client has been deleted");
         this.$router.back().catch((error) => {
           console.log(error);
         });
       });
+
+
+   
+
     }
     },
     refreshPage(){
@@ -150,6 +167,11 @@ export default {
       this.$router.go(this.$router.currentRoute)
 
     },
+    editattendance(eventID) {
+    // this is where I needa work tmr
+
+
+    }
   },
   validations() {
     return {
@@ -386,6 +408,14 @@ export default {
 
         <hr class="mt-10 mb-10" />
 
+
+
+
+
+
+
+
+
         <!-- Client Event Information -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Events for Client</h2>
@@ -402,7 +432,13 @@ export default {
                 <tr v-for="event in clientEvents" :key="event._id">
                   <td class="p-2 text-left">{{ event.eventName }}</td>
                   <td class="p-2 text-left">{{ formattedDate(event.eventDate) }}</td>
+                  <button
+                  @click="editattendance(event._id)" 
+                  class="p-2 text-left bg-transparent hover:bg-red-600 text-red-700 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded"> 
+                  Unattend 
+                </button>
                 </tr>
+
               </tbody>
             </table>
           </div>

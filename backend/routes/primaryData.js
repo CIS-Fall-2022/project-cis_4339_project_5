@@ -42,7 +42,7 @@ router.get("/id/:id", (req, res, next) => {
 });
 
 //GET entries based on search query
-//Ex: '...?firstName=Bob&lastName=&searchBy=name' 
+//Ex: '...?firstName=Bob&lastName=&searchBy=number' 
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
@@ -127,6 +127,79 @@ router.put("/:id", (req, res, next) => {
         }
     );
 });
+
+// Lam
+// remove attendee from all event
+// utlizes the update many function and pull all method
+router.put("/events/:id", (req,res,next)=>{
+    eventdata.updateMany({
+        $pullAll: {
+            attendees: [req.params.id]
+
+        }},(error,data)=>{
+            if (error) {
+                console.log(error)
+                return next(error);
+            }
+                
+                else {
+                    res.json("attendee removed from all events")
+                    console.log(data)
+
+                }
+        
+                  
+            });
+        });
+
+// Lam 
+// removing an attendee from a specific event
+// gonna reuse code but it should be able to work
+// gotta implement this to api tommorow 
+// takes in two parameters one for the event id and the other for the cilent id afterwards it removes
+// the attendee using the parameters
+
+router.put("/unattend_event/:eventid/:id", (req, res, next) => { 
+
+    // console.log(req.query.cilentid)
+    // console.log(req.query["eventid"])
+    eventdata.updateOne( 
+        { _id: req.params.eventid},
+            {  $pullAll: {
+                attendees: [req.params.id] } 
+
+    
+            },(error,data)=>{
+                if (error) {
+
+                    
+                    console.log(error)
+                    return next(error);
+                }
+                    
+                    else {
+                        res.json("attendee has been removed")
+
+    
+                    }
+            
+                      
+                });
+            });
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
 
 //Lauren 
 //DELETE for the intake form, which remvoes a client based on the _id 
