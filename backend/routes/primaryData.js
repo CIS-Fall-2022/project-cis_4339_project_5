@@ -128,7 +128,7 @@ router.put("/:id", (req, res, next) => {
     );
 });
 
-//Lauren 
+// Lam delete function that will also delete an attendee
 //DELETE for the intake form, which remvoes a client based on the _id 
 router.delete("/:id", (req,res,next)=>{
     primarydata.deleteOne(
@@ -136,12 +136,66 @@ router.delete("/:id", (req,res,next)=>{
         (error,data)=>{
             if (error) {
                 return next(error);
+
             } else {
-                res.json(data);
+                eventdata.updateMany({
+                    $pullAll: {
+                        attendees: [req.params.id]
+                    },
+                });
+                res.json("test")
+             
+                  
             }
         }
-    );
+    )
+    
+
+
 });
+
+
+// remove attendee from all event
+router.put("/events/:id", (req,res,next)=>{
+    eventdata.updateMany({
+        $pullAll: {
+            attendees: [req.params.id]
+
+        }},(error,data)=>{
+            if (error) {
+                return next(error);
+            }
+                
+                else {
+                    res.json("check if removal worked")
+
+
+                }
+        
+                  
+            });
+        })
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //GET clients off of their number

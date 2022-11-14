@@ -110,15 +110,21 @@ export default {
     //There is also an alert box that appears once the action is complete to help frontend user know what's going on
     deleteClient(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/${this.id}`;
+      let apiURL2 = import.meta.env.VITE_ROOT_API + `/primaryData/events/${this.id}`;
+
       if (window.confirm("Are you sure you want to delete this Client?")) {
         axios.delete(apiURL, this.client).then(() => {
+    
+        axios.delete(apiURL2, this.client).then(() => {
           alert("Client has been deleted");
+        }),
         this.$router.back().catch((error) => {
           console.log(error);
-        });
-      });
-    }
-    },
+       
+      })
+    })
+    }},
+    
     addToEvent() {
       this.eventsChosen.forEach((event) => {
         let apiURL =

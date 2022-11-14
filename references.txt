@@ -5,3 +5,4 @@ https://www.w3schools.com/jsref/jsref_tostring_number.asp
 https://www.codegrepper.com/code-examples/typescript/check+if+key+value+exists+in+json+object+javascript
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries
 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/join
+https://stackoverflow.com/questions/6694507/how-can-i-update-multiple-documents-in-mongoose
