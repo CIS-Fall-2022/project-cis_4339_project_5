@@ -286,6 +286,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            // Error Handling
+            // If a client tries to register with a phone number that is already in the database, they will see an error message
+            if (error.message === 'Request failed with status code 500') {
+            alert('A client is already registered with this phone number.' + '\n Please enter a different phone number.');
+            }
           });
       }
     },
