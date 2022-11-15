@@ -73,7 +73,6 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Email</span>
-              <span style="color:#ff0000">*</span>
               <input
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -286,6 +285,11 @@ export default {
           })
           .catch((error) => {
             console.log(error);
+            // Error Handling
+            // If a client tries to register with a phone number that is already in the database, they will see an error message
+            if (error.message === 'Request failed with status code 500') {
+            alert('A client is already registered with this phone number.' + '\n Please enter a different phone number.');
+            }
           });
       }
     },

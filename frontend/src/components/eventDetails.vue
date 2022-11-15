@@ -15,7 +15,7 @@
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="event.eventName"
+                v-model="event.eventName" required
               />
               <span class="text-black" v-if="v$.event.eventName.$error">
                 <p
