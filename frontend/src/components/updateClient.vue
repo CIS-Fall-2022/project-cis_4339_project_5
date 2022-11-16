@@ -77,6 +77,7 @@ export default {
           this.clientEvents.push({
             eventName: event.eventName,
             eventDate: event.date,
+            _id: event._id
           });
         });
       });
@@ -113,6 +114,7 @@ export default {
     // of attendees
     deleteClient(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/${this.id}`;
+      
       let apiURL2 = import.meta.env.VITE_ROOT_API + `/primaryData/events/${this.id}`;
       if (window.confirm("Are you sure you want to delete this Client?")) {
         axios.put(apiURL2, this.client).then(() => {
@@ -164,11 +166,23 @@ export default {
       });
 
       alert("Client is now registered for the event");
-      this.$router.go(this.$router.currentRoute)
+      this.refreshPage()
 
     },
-    editattendance(eventID) {
+    editattendance(event) {
     // this is where I needa work tmr
+
+    let apiURL =  import.meta.env.VITE_ROOT_API + '/primaryData/unattend_event/' + event._id  + '/' + this.$route.params.id
+    axios.put(apiURL).then(() => {
+
+    alert("The cilent has been removed from this event")
+    this.refreshPage()
+});
+
+
+
+
+
 
 
     }
@@ -426,14 +440,16 @@ export default {
                 <tr>
                   <th class="p-4 text-left">Event Name</th>
                   <th class="p-4 text-left">Date</th>
+                  
                 </tr>
               </thead>
               <tbody class="divide-y divide-gray-300">
                 <tr v-for="event in clientEvents" :key="event._id">
                   <td class="p-2 text-left">{{ event.eventName }}</td>
                   <td class="p-2 text-left">{{ formattedDate(event.eventDate) }}</td>
+                  <!-- <td class="p-2 text-left">{{ event._id }}</td> -->
                   <button
-                  @click="editattendance(event._id)" 
+                  @click="editattendance(event)" 
                   class="p-2 text-left bg-transparent hover:bg-red-600 text-red-700 font-semibold hover:text-white py-2 px-2 border border-red-500 hover:border-transparent rounded"> 
                   Unattend 
                 </button>
