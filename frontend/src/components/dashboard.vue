@@ -108,7 +108,9 @@ export default {
       // { "HEB": 0, "uh coding session": 5, "laurens uh homecoming ": 2 }
       queryData: [],
       x_axis: [],
-      y_axis: []
+      y_axis: [],
+      loading: false,
+      error: null,
 
 
     };
