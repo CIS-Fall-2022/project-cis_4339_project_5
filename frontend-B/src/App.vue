@@ -68,7 +68,7 @@ export default {
     }
   },
   mounted(){
-    axios.get('http://localhost:3001/organizationData/').then(response =>
+    axios.get(import.meta.env.VITE_ROOT_API+'/organizationData/').then(response =>
     this.results = response.data
     )},
   name: "App",

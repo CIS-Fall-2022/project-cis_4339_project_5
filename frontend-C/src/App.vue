@@ -70,7 +70,7 @@ export default {
   },
   mounted(){
     //use axios get to call the API that retrieves organization name and store the data in the results array
-    axios.get('http://localhost:3002/organizationData/').then(response =>
+    axios.get(import.meta.env.VITE_ROOT_API+'/organizationData/').then(response =>
     this.results = response.data
     )},
   name: "App",
