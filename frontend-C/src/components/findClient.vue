@@ -79,15 +79,16 @@
           <thead class="bg-gray-50 text-xl">
             <tr>
               <th class="p-4 text-left">Name</th>
-              <th class="p-4 text-left">Phone number</th>
+              <th class="p-4 text-left">Phone Number</th>
               <th class="p-4 text-left">City</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr @click="editClient(client._id)" v-for="client in queryData" :key="client._id">
-              <td class="p-2 text-left">{{ client.firstName + " " + client.lastName }}</td>
-              <td class="p-2 text-left">{{ client.phoneNumbers[0].primaryPhone }}</td>
-              <td class="p-2 text-left">{{ client.address.city }}</td>
+            
+              <td class="capitalize p-2 text-left">{{ client.firstName + " " + client.lastName }}</td>
+               <td class="capitalize p-2 text-left">{{ client.phoneNumbers.primaryPhone }}</td>
+              <td class="capitalize p-2 text-left">{{ client.address.city }}</td>
             </tr>
           </tbody>
         </table>

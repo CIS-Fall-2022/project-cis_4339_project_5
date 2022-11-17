@@ -147,6 +147,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.city"
+                required
               />
             </label>
           </div>
@@ -161,7 +162,8 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.county"
-                required
+
+               
               />
             </label>
           </div>
@@ -176,7 +178,8 @@
                 placeholder="XXXXX"
                 pattern="(^\d{5}$)"
                 v-model="event.address.zip"
-                required
+
+
               />
             </label>
           </div>
@@ -315,8 +318,14 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
+
+
+      if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "" || this.event.city === "" || this.event.county === ""
+      || this.event.zip === "")
+
       //adding validation so that when a user is updating an event they will not be able to resubit if the required fields are left blank
-      if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "")
+
+
       {
         alert("Missing Field Element")
 
