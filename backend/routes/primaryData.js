@@ -123,6 +123,7 @@ router.put("/:id", (req, res, next) => {
                 return next(error);
             } else {
                 res.json(data);
+                // console.log(data.phoneNumbers)
             }
         }
     );
