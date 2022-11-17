@@ -18,6 +18,7 @@ let primaryDataSchema = new Schema({
     firstName: {
         type: String,
         required: true
+        
     },
     middleName: {
         type: String,
@@ -28,7 +29,8 @@ let primaryDataSchema = new Schema({
     },
 
     email: {
-        type: String
+        type: String,
+        required: true
     },
     phoneNumbers: {
         primaryPhone: {

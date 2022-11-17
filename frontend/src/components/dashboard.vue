@@ -66,7 +66,7 @@
         <table class="min-w-full shadow-md rounded">
           <thead class="bg-gray-50 text-xl">
             <tr>
-              <th class="p-4 text-left">Event Name</th>
+              <th class="capitalize p-4 text-left">Event Name</th>
               <th class="p-4 text-left">Number of Attendees</th>
          
             </tr>
@@ -75,7 +75,7 @@
           <tbody class="divide-y divide-gray-300">
             <tr  v-for="Attendees , event in queryData" >
               
-              <td class="p-2 text-left">{{ event }}</td>
+              <td class="capitalize p-2 text-left">{{ event }}</td>
               <td class="p-2 text-left">{{ Attendees }}</td>
       
             </tr>
@@ -120,6 +120,11 @@ export default {
 
 methods: {
 
+  capitalize(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+},
+
+
 async fetchData() {
    
   try {
@@ -134,7 +139,7 @@ async fetchData() {
 
         const response = await axios.get(url);
         //"re-organizing" - mapping json from the response
-        this.x_axis = response.data.map((item) => item.eventName);
+        this.x_axis = response.data.map((item) => item.eventName.split(' ').map(this.capitalize).join(' '));
         this.y_axis = response.data.map((item) => item.attendees);
 
 
