@@ -36,7 +36,10 @@ let primaryDataSchema = new Schema({
         primaryPhone: {
             type: Number,
             required: true,
-            unique: true
+            unique: true,
+
+       
+            
 
         },
         seondaryPhone: 

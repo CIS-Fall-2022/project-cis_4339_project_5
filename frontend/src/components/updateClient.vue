@@ -97,14 +97,32 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     handleClientUpdate() {
+      
+      if ( this.client.firstName === "" ||  this.client.lastName === "" || this.client.email === "" 
+      || this.client.phoneNumbers.primaryPhone === "" || this.client.phoneNumbers.primaryPhone.length > 10
+       || this.client.phoneNumbers.primaryPhone.length < 10 || this.client.address.line1 === "" ||
+       this.client.address.city === "" || this.client.address.county === "" ||   this.client.address.zip === "") {
+
+        alert("Missing Field Element")
+
+    }
+
+    else {
+
       let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
       axios.put(apiURL, this.client).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
           console.log(error);
         });
-      });
-    },
+      })
+    }
+      
+    }
+
+
+
+    ,
     //Method called when button is clicked in the frontend, using AXIOS delete with the correct API URL for
     //the backend delete client route. But, first the client must accept the confirm box that appears when deleting a client.
     //There is also an alert box that appears once the action is complete to help frontend user know what's going on
