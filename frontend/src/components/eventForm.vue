@@ -21,13 +21,6 @@
                 v-model="event.eventName"
                 required
               />
-              <span class="text-black" v-if="v$.event.eventName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.eventName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
@@ -42,13 +35,6 @@
                 type="date"
                 required
               />
-              <span class="text-black" v-if="v$.event.date.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.date.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
