@@ -72,7 +72,6 @@ export default {
           `/eventdata/client/${this.$route.params.id}`
       )
       .then((resp) => {
-        let data = resp.data;
         resp.data.forEach((event) => {
           this.clientEvents.push({
             eventName: event.eventName,
@@ -170,7 +169,6 @@ export default {
 
     },
     editattendance(event) {
-    // this is where I needa work tmr
 
     let apiURL =  import.meta.env.VITE_ROOT_API + '/primaryData/unattend_event/' + event._id  + '/' + this.$route.params.id
     axios.put(apiURL).then(() => {
