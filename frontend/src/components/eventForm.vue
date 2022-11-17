@@ -280,6 +280,12 @@ export default {
       event: {
         eventName: { required },
         date: { required },
+        address: {
+          line1: { required },
+          city: { required },
+          county: { required },
+          zip: { required } 
+        }
       },
     };
   },

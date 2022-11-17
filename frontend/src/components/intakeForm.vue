@@ -78,7 +78,9 @@
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                placeholder="example@gmail.com"
                 v-model="client.email"
+                required
               />
               <span class="text-black" v-if="v$.client.email.$error">
                 <p
@@ -301,15 +303,17 @@ export default {
       client: {
         firstName: { required },
         lastName: { required },
-        email: { email },
+        email: { email, required },
         address: {
+          line1: { required },
           city: { required },
+          county: { required },
+          zip: { required }
         },
         phoneNumbers: 
           {
             primaryPhone: { required, numeric },
           },
-        
       },
     };
   },
