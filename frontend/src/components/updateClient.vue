@@ -96,7 +96,8 @@ export default {
       return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
     async handleClientUpdate() {
-      
+      //adding validation so that the user cannot leave required fields blank when they resubmit 
+      //and update of their client information
       if ( this.client.firstName === "" ||  this.client.lastName === "" || this.client.email === "" 
       || this.client.phoneNumbers.primaryPhone === "" || this.client.phoneNumbers.primaryPhone.length > 10
        || this.client.phoneNumbers.primaryPhone.length < 10 || this.client.address.line1 === "" ||

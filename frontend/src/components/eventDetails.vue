@@ -191,6 +191,7 @@
               class="bg-red-700 text-white rounded"
             >Update Event</button>
           </div>
+          <!--added a button in the frontend so that the use can delete an event-->
           <div class="flex justify-between mt-10 mr-20">
             <button
               @click="deleteEvent"
@@ -314,7 +315,7 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
-
+      //adding validation so that when a user is updating an event they will not be able to resubit if the required fields are left blank
       if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "")
       {
         alert("Missing Field Element")
