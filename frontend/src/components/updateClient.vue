@@ -93,18 +93,22 @@ export default {
     });
   },
   methods: {
-    formattedDate(datetimeDB) {
-      return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
-    },
-    handleClientUpdate() {
-      let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
-      axios.put(apiURL, this.client).then(() => {
-        alert("Update has been saved.");
-        this.$router.back().catch((error) => {
-          console.log(error);
+    async handleClientUpdate() {
+     const isFormCorrect = await this.v$.$validate();
+      console.log(this.client)
+      if (isFormCorrect) {
+        let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
+        axios.put(apiURL, this.client).then(() => {
+          alert("Update has been saved.");
+          this.$router.back().catch((error) => {
+            console.log(error);
         });
       });
+  },
+    formattedDate(datetimeDB) {
+    return DateTime.fromISO(datetimeDB).plus({ days: 1 }).toLocaleString();
     },
+
     //Method called when button is clicked in the frontend, using AXIOS delete with the correct API URL for
     //the backend delete client route. But, first the client must accept the confirm box that appears when deleting a client.
     //There is also an alert box that appears once the action is complete to help frontend user know what's going on
@@ -175,7 +179,7 @@ export default {
     let apiURL =  import.meta.env.VITE_ROOT_API + '/primaryData/unattend_event/' + event._id  + '/' + this.$route.params.id
     axios.put(apiURL).then(() => {
 
-    alert("The cilent has been removed from this event")
+    alert("The cilent has been removed from this event.")
     this.refreshPage()
 });
 
@@ -192,7 +196,7 @@ export default {
       client: {
         firstName: { required, alpha },
         lastName: { required, alpha },
-        email: { email },
+        email: { email, required },
         address: {
           city: { required },
           county: { required },
@@ -213,7 +217,7 @@ export default {
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Update Client</h1>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
-      <form @submit.prevent="handleSubmitForm">
+      <form @submit.prevent="handleClientUpdate">
         <!-- grid container -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Personal Details</h2>
@@ -225,8 +229,8 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
                 v-model="client.firstName"
+                required
               />
               <span class="text-black" v-if="v$.client.firstName.$error">
                 <p
@@ -245,7 +249,6 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
                 v-model="client.middleName"
               />
             </label>
@@ -277,11 +280,14 @@ export default {
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Email</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                placeholder="example@gmail.com"
                 v-model="client.email"
+                required
               />
               <span class="text-black" v-if="v$.client.email.$error">
                 <p
@@ -339,6 +345,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.line1"
+                required
               />
             </label>
           </div>
@@ -362,6 +369,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.city"
+                required
               />
             </label>
           </div>
@@ -375,6 +383,7 @@ export default {
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="client.address.county"
+                required
               />
             </label>
           </div>
