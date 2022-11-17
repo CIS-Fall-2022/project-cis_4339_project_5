@@ -19,6 +19,7 @@
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="event.eventName"
+                required
               />
               <span class="text-black" v-if="v$.event.eventName.$error">
                 <p
@@ -39,6 +40,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="event.date"
                 type="date"
+                required
               />
               <span class="text-black" v-if="v$.event.date.$error">
                 <p
@@ -131,11 +133,13 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Address Line 1</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.line1"
+                required
               />
             </label>
           </div>
@@ -155,11 +159,13 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">City</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.city"
+                required
               />
             </label>
           </div>
@@ -168,11 +174,13 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">County</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.county"
+                required
               />
             </label>
           </div>
@@ -180,11 +188,14 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Zip Code</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
+                placeholder="XXXXX"
+                pattern="(^\d{5}$)"
                 v-model="event.address.zip"
+                required
               />
             </label>
           </div>
@@ -201,6 +212,8 @@
 import useVuelidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 import axios from "axios";
+
+
 export default {
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) };
@@ -220,6 +233,7 @@ export default {
           zip: "",
         },
         description: "",
+        attendees: []
       },
     };
   },
@@ -236,7 +250,8 @@ export default {
           .then(() => {
             alert("Event has been added.");
             this.$router.push("/findEvents");
-            this.client = {
+            this.event = {
+          
               eventName: "",
               services: [],
               date: "",
@@ -248,6 +263,8 @@ export default {
                 zip: "",
               },
               description: "",
+              attendees: []
+        
             };
             this.checkedServices = [];
           })
@@ -263,6 +280,12 @@ export default {
       event: {
         eventName: { required },
         date: { required },
+        address: {
+          line1: { required },
+          city: { required },
+          county: { required },
+          zip: { required } 
+        }
       },
     };
   },

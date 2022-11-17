@@ -85,6 +85,10 @@ let eventDataSchema = new Schema({
         type: String,
         required: true
     },
+    org_id:{
+        type: Number,
+        default:  parseInt(process.env.ORG_ID)
+    },
     services: [{
         type: String,
         required: true

@@ -15,7 +15,7 @@
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="event.eventName"
+                v-model="event.eventName" required
               />
               <span class="text-black" v-if="v$.event.eventName.$error">
                 <p
@@ -157,6 +157,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.city"
+                required
               />
             </label>
           </div>
@@ -170,6 +171,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.county"
+                
               />
             </label>
           </div>
@@ -182,6 +184,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.zip"
+             
               />
             </label>
           </div>
@@ -307,7 +310,7 @@ export default {
                 attendeeFirstName: data.firstName,
                 attendeeLastName: data.lastName,
                 attendeeCity: data.address.city,
-                attendeePhoneNumber: data.phoneNumbers[0].primaryPhone,
+                attendeePhoneNumber: data.phoneNumbers.primaryPhone,
               });
             });
         }
@@ -319,20 +322,40 @@ export default {
     },
     handleEventUpdate() {
       this.event.services = this.checkedServices;
-      let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
+
+      if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "" || this.event.city === "" || this.event.county === ""
+      || this.event.zip === "")
+      {
+        alert("Missing Field Element")
+
+
+}
+
+      else {
+        let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.put(apiURL, this.event).then(() => {
         alert("Update has been saved.");
         this.$router.back().catch((error) => {
           console.log(error);
         });
-      });
+
+      }
+      )
+
+
+      }
+
+    
     },
     editClient(clientID) {
       this.$router.push({ name: "updateclient", params: { id: clientID } });
     },
+    //this method allows an event to be deleted, it uses the API from the backend via axios to connect the db 
+    //it is able to collect the event id based on the keyword 'this' that retrieves the event id based on the current page being rendered
     deleteEvent(){
       let apiURL = import.meta.env.VITE_ROOT_API + `/eventdata/${this.id}`;
       axios.delete(apiURL, this.event).then(() => {
+        //this alert box is used to let the frontend viewer know something is happening 
         alert("Event has been deleted");
         this.$router.back().catch((error) => {
           console.log(error);

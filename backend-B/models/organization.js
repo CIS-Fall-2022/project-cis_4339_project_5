@@ -9,19 +9,14 @@ let organizationSchema = new Schema({
     //ID number to identify the organziation
     org_id: {
         type: Number,
-        require: true,
-        unique: true
+        default:  parseInt(process.env.ORG_NAME)
     },
     //Name of organization
     org_name: {
         type: String,
-        require: true
+        default:  parseInt(process.env.ORG_ID)
     },
-    //Written string description of the organization
-    org_description: {
-        type: String,
-        required: true
-    },
+
 
 }, {
 

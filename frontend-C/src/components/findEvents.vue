@@ -55,6 +55,12 @@
       </div>
     </div>
 
+
+
+
+
+
+    
     <hr class="mt-10 mb-10" />
     <!-- Display Found Data -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
@@ -66,16 +72,16 @@
         <table class="min-w-full shadow-md rounded">
           <thead class="bg-gray-50 text-xl">
             <tr>
-              <th class="p-4 text-left">Event Name</th>
+              <th class="capitalize p-4 text-left">Event Name</th>
               <th class="p-4 text-left">Event Date</th>
-              <th class="p-4 text-left">Event Address</th>
+              <th class="capitalize p-4 text-left">Event Address</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr @click="editEvent(event._id)" v-for="event in queryData" :key="event._id">
-              <td class="p-2 text-left">{{ event.eventName }}</td>
+              <td class="capitalize p-2 text-left">{{ event.eventName }}</td>
               <td class="p-2 text-left">{{ formattedDate(event.date) }}</td>
-              <td class="p-2 text-left">{{ event.address.line1 }}</td>
+              <td class="capitalize p-2 text-left">{{ event.address.line1 }}</td>
             </tr>
           </tbody>
         </table>
@@ -138,6 +144,7 @@ export default {
       });
     },
     editEvent(eventID) {
+      console.log(eventID)
       this.$router.push({ name: "eventdetails", params: { id: eventID } });
     },
   },

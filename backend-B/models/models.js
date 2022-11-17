@@ -5,10 +5,20 @@ const Schema = mongoose.Schema;
 //collection for intakeData for clients includes the embedded address object schema
 let primaryDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
-   
+    org_id:{
+        type: Number,
+        default:  parseInt(process.env.ORG_ID)
+    },
+
+    org_name:{
+        type: String,
+        default:process.env.ORG_NAME
+    },
+
     firstName: {
         type: String,
-        require: true
+        required: true
+        
     },
     middleName: {
         type: String,
@@ -19,19 +29,23 @@ let primaryDataSchema = new Schema({
     },
 
     email: {
-        type: String
+        type: String,
+        required: true
     },
     phoneNumbers: {
         primaryPhone: {
             type: Number,
             required: true,
-            unique: true
+            unique: true,
+
+       
+            
 
         },
         seondaryPhone: 
         {
             type: Number,
-            unique: true
+            
           
         }
     },
@@ -66,20 +80,18 @@ let primaryDataSchema = new Schema({
 //collection for eventData includes embedded address object schema
 let eventDataSchema = new Schema({
     _id: { type: String, default: uuid.v1 },
-    event_id: {
-        type: Number,
-        require: true,
-        unique: true
-
-    },
-
+    
     eventName: {
         type: String,
-        require: true
+        required: true
+    },
+    org_id:{
+        type: Number,
+        default:  parseInt(process.env.ORG_ID)
     },
     services: [{
         type: String,
-        require: true
+        required: true
     }],
     date: {
         type: Date,
@@ -107,7 +119,8 @@ let eventDataSchema = new Schema({
     },
     // acts as the list of attendees 
     attendees: [{
-        type: Number
+        type: String,
+        default: null
     }]
 }, {
     collection: 'eventData'

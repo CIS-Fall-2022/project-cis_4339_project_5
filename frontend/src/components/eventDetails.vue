@@ -157,6 +157,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.city"
+                required
               />
             </label>
           </div>
@@ -170,6 +171,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.county"
+                
               />
             </label>
           </div>
@@ -182,6 +184,7 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.zip"
+             
               />
             </label>
           </div>
@@ -320,7 +323,8 @@ export default {
     handleEventUpdate() {
       this.event.services = this.checkedServices;
 
-      if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "")
+      if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "" || this.event.city === "" || this.event.county === ""
+      || this.event.zip === "")
       {
         alert("Missing Field Element")
 

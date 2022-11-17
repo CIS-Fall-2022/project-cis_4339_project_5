@@ -29,8 +29,18 @@ router.get("/", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
-        { _id: req.params.id }, 
+    primarydata.find(         {
+        $and: [
+          {
+            _id: req.params.id
+          },
+          {
+            org_id:process.env.ORG_ID
+            }
+          ]}
+    
+
+        , 
         (error, data) => {
             if (error) {
                 return next(error);
@@ -42,7 +52,7 @@ router.get("/id/:id", (req, res, next) => {
 });
 
 //GET entries based on search query
-//Ex: '...?firstName=Bob&lastName=&searchBy=name' 
+//Ex: '...?firstName=Bob&lastName=&searchBy=number' 
 router.get("/search/", (req, res, next) => { 
     let dbQuery = "";
     if (req.query["searchBy"] === 'name') {
@@ -103,6 +113,7 @@ router.post("/", (req, res, next) => {
             if (error) {
                 return next(error);
             } else {
+                console.log("data added")
                 res.json(data); 
             }
         }
@@ -122,10 +133,84 @@ router.put("/:id", (req, res, next) => {
                 return next(error);
             } else {
                 res.json(data);
+                // console.log(data.phoneNumbers)
             }
         }
     );
 });
+
+// Lam
+// remove attendee from all event
+// utlizes the update many function and pull all method
+router.put("/events/:id", (req,res,next)=>{
+    eventdata.updateMany({
+        $pullAll: {
+            attendees: [req.params.id]
+
+        }},(error,data)=>{
+            if (error) {
+                console.log(error)
+                return next(error);
+            }
+                
+                else {
+                    res.json("attendee removed from all events")
+                    console.log(data)
+
+                }
+        
+                  
+            });
+        });
+
+// Lam 
+// removing an attendee from a specific event
+// gonna reuse code but it should be able to work
+// gotta implement this to api tommorow 
+// takes in two parameters one for the event id and the other for the cilent id afterwards it removes
+// the attendee using the parameters
+
+router.put("/unattend_event/:eventid/:id", (req, res, next) => { 
+
+    // console.log(req.query.cilentid)
+    // console.log(req.query["eventid"])
+    eventdata.updateOne( 
+        { _id: req.params.eventid},
+            {  $pullAll: {
+                attendees: [req.params.id] } 
+
+    
+            },(error,data)=>{
+                if (error) {
+
+                    
+                    console.log(error)
+                    return next(error);
+                }
+                    
+                    else {
+                        res.json("attendee has been removed")
+
+    
+                    }
+            
+                      
+                });
+            });
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
 
 //Lauren 
 //DELETE for the intake form, which remvoes a client based on the _id 
@@ -161,8 +246,6 @@ router.get("/getnum/:nums", (req, res, next) => {
     );
 });
 
-
-
 // Lam 
 // count of cilents who signed up for events past two months
 router.get("/search_attendee_2_months/", (req,res,next)=>{
@@ -181,40 +264,83 @@ router.get("/search_attendee_2_months/", (req,res,next)=>{
             
             // console.log(data);
             // lam test 
-            let count = []
+           
             var dict = {}
 
             // loops through the obj to grab the values within the objects
             // dict drabs the distinct values tied to an event
             // the array act as a counter to count the total num of attendees over all
-
+         
             for (const i in data) {   
                     // count.push(x)
+                    if (data[i]["attendees"].length === 0) {
+                        dict[data[i]["eventName"]] = 0
+                    }
                 for (const [key, value] of Object.entries(data[i]["attendees"])) {
                     // console.log(key, value);
-                    if (dict.hasOwnProperty(data[i]["eventName"])) {
-                        dict[data[i]["eventName"]].push(value)
+                    if (dict.hasOwnProperty(data[i]["eventName"]) & data[i]["attendees"].length > 0) {
+                        dict[data[i]["eventName"]] = dict[data[i]["eventName"]]+1
                     }
-                    else {
-                        dict[data[i]["eventName"]] = [value]
+
+                    else if (data[i]["attendees"].length > 0){
+                        dict[data[i]["eventName"]] = 1
                     }
-                    count.push(value)
                     }
               }
-
-
-            let test = []
-            // loops through my dict object and then grabs the key and values to form the string within the array test  
-            for (const [key, value] of Object.entries(dict)) {
-            test.push("The number of attendees for the" + key + " is " + (dict[key].length).toString());
-            }
-            // console.log(test)
-            // joins the string and then concatenating that string to another string
-            let output_string = (test.join());
-            let output = "This report returns the number of attendees who have signed for an event that is taking place between now and two months prior. " + output_string + ". The number of attendees that signed up for an event during the past two months is: " 
-            + (count.length).toString()  
-            res.json(output);
+              res.json(dict);
+            
         }
+    }
+)
+});
+
+// Lam 
+// count of cilents who signed up for events past two months is formatts it correctly to match the requirements of chart.js
+router.get("/search_attendee_chart/", (req,res,next)=>{
+
+    eventdata.find({
+    date: {
+        $gte: subtractMonths(new Date(), 2),
+        $lte: new Date()
+    }}
+    ,{eventName:1,attendees:1,date:1},
+    (error, data) => { 
+        if (error) {
+            return next(error);
+        } else {
+        
+            
+            // console.log(data);
+            // lam test 
+           
+            var list = []
+
+            // loops through the obj to grab the values within the objects
+            // dict drabs the distinct values tied to an event
+            // the array act as a counter to count the total num of attendees over all
+         
+            for (const i in data) {   
+                var dict = {}
+                    // count.push(x)
+                    if (data[i]["attendees"].length === 0) {
+                        dict["eventName"] = data[i]["eventName"]
+                        dict["attendees"] = 0
+                        list.push(dict)
+                        
+                    
+                    }
+                    else {
+                        dict["eventName"] = data[i]["eventName"]
+                        dict["attendees"] = data[i]["attendees"].length
+                        list.push(dict)
+                    }
+                    
+            // console.log(list)
+                }
+
+            res.json(list);
+            }
+
     }
 )
 });

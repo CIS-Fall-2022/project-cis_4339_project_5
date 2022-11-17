@@ -29,8 +29,18 @@ router.get("/", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => {
-    primarydata.find( 
-        { _id: req.params.id }, 
+    primarydata.find(         {
+        $and: [
+          {
+            _id: req.params.id
+          },
+          {
+            org_id:process.env.ORG_ID
+            }
+          ]}
+    
+
+        , 
         (error, data) => {
             if (error) {
                 return next(error);

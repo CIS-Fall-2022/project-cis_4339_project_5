@@ -1,6 +1,11 @@
 const express = require("express");
 const router = express.Router();
 // Lam
+
+//allow using a .env file
+require("dotenv").config();
+
+
 //importing data model schemas
 let { eventdata } = require("../models/models"); 
 
@@ -15,7 +20,7 @@ const subtractMonths = (date, months) => {
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    eventdata.find( 
+    eventdata.find(
         (error, data) => {
             if (error) {
                 return next(error);
@@ -28,7 +33,20 @@ router.get("/", (req, res, next) => {
 
 //GET single entry by ID
 router.get("/id/:id", (req, res, next) => { 
-    eventdata.find({ _id: req.params.id }, (error, data) => {
+    eventdata.find(
+        {
+        $and: [
+          {
+            _id: req.params.id
+          },
+          {
+            org_id:process.env.ORG_ID
+            }
+          ]}
+        
+      
+        
+        , (error, data) => {
         if (error) {
             return next(error)
         } else {
@@ -107,7 +125,7 @@ router.put("/:id", (req, res, next) => {
 //DELETE endpoint for an event
 router.delete("/:id", (req,res,next)=>{
     eventdata.deleteOne(
-        {_id:req.params.id}, 
+        {_id : req.params.id}, 
         (error,data)=>{
             if (error) {
                 return next(error);
@@ -119,26 +137,25 @@ router.delete("/:id", (req,res,next)=>{
 });
 
 
-
-//PUT add attendee to event using client id 
+// Lam Dang
+//PUT add attendee to event using client id which is there object_id
 // event is placed into the url
 
 router.put("/addAttendee/:id", (req, res, next) => {
     //only add attendee if not yet signed uo
     eventdata.find( 
-        {event_id: req.params.id, attendees: req.body.client_id }, 
+        {_id: req.params.id, attendees: req.body._id }, 
         (error, data) => { 
             if (error) {
                 return next(error);
             } else {
                 if (data.length == 0) {
                     eventdata.updateOne(
-                        { event_id: req.params.id }, 
-                        { $push: { attendees: req.body.client_id } },
+                        { _id: req.params.id }, 
+                        { $push: { attendees: req.body._id } },
                         (error, data) => {
                             if (error) {
-                                consol
-                                return next(error);
+                                return next(data);
                             } else {
                                 res.send('Client is added to event.');
                                 console.log('Event successfully updated!', data)
