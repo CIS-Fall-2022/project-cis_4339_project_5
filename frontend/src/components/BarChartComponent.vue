@@ -1,4 +1,5 @@
 <template>
+  <h1 style="font-size:150%; text-align:center; font-family:arial;color:rgb(140,10,10)">2 Months Event Attendance</h1>
   <canvas ref="myChart" ></canvas>
 </template>
 
@@ -23,19 +24,35 @@ export default {
         labels: this.label,
         datasets: [
           {
-            label: "Number of Attendees",
-            backgroundColor: "rgba(144,238,144 , 0.9 )",
+            label: "Attendees",
+            backgroundColor: [
+               "rgba(100,100,200, 0.6 )",
+               "rgba(0,180,240, 0.6 )",
+               "rgba(0,20,255, 0.6 )",
+               "rgba(150,200,180, 0.6 )",
+               "rgba(50,50,160, 0.6 )",
+              ],
             data: this.chartData,
           },
         ],
       },
       options: {
+        plugins:{
+          legend:{
+            display:true,
+            position:'bottom',
+            labels: {
+              color:"rgb(100,100,155)"
+            }
+          }
+        },
         scales: {
             y: {
               beginAtZero: true,
-              max: 10
+              //makes the chart y axis dynamic based on how many attendees plus some buffer space
+              max: this.chartData.length +4,
 
-                
+            
             }
         }
       }
