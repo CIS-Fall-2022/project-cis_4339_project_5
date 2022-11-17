@@ -242,13 +242,6 @@ export default {
                 v-model="client.firstName"
                 required
               />
-              <span class="text-black" v-if="v$.client.firstName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.firstName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
@@ -276,13 +269,6 @@ export default {
                 v-model="client.lastName"
                 required
               />
-              <span class="text-black" v-if="v$.client.lastName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.lastName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <div></div>
@@ -299,13 +285,6 @@ export default {
                 v-model="client.email"
                 required
               />
-              <span class="text-black" v-if="v$.client.email.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.email.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <!-- form field -->
@@ -320,13 +299,6 @@ export default {
                 v-model="client.phoneNumbers.primaryPhone"
                 required
               />
-              <span class="text-black" v-if="v$.client.phoneNumbers[0].primaryPhone.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.phoneNumbers[0].primaryPhone.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <!-- form field -->
