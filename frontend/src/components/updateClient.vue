@@ -94,9 +94,6 @@ export default {
   },
   methods: {
     async handleClientUpdate() {
-     const isFormCorrect = await this.v$.$validate();
-      console.log(this.client)
-      if (isFormCorrect) {
         let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
         axios.put(apiURL, this.client).then(() => {
           alert("Update has been saved.");
