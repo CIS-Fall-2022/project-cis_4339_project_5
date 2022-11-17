@@ -18,6 +18,7 @@ let primaryDataSchema = new Schema({
     firstName: {
         type: String,
         required: true
+        
     },
     middleName: {
         type: String,
