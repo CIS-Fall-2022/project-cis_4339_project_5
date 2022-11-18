@@ -39,6 +39,7 @@ export default {
       },
       // list of events shown in table
       clientEvents: [],
+      clientEvents_id: []
       // this needs to be updated as well
      
     };
@@ -78,6 +79,9 @@ export default {
             eventDate: event.date,
             _id: event._id
           });
+          this.clientEvents_id.push(event._id)
+
+
         });
       });
     axios.get(import.meta.env.VITE_ROOT_API + `/eventdata`).then((resp) => {
@@ -111,8 +115,7 @@ export default {
 
       let apiURL = import.meta.env.VITE_ROOT_API + `/primarydata/${this.id}`;
       axios.put(apiURL, this.client).then(() => {
-        alert("Update has been saved.");
-        this.$router.back().catch((error) => {
+        this.$router.push('/findclient').catch((error) => {
           console.log(error);
         });
       })
@@ -157,12 +160,37 @@ export default {
       window.location.reload();
     },
     addToEvent() {
+
+      
+
       this.eventsChosen.forEach((event) => {
+
+        if (this.clientEvents_id.includes(event._id))  
+        {
+        
+          alert("the cilent is already attending this event");
+          
+        }
+
+
+        else {
         let apiURL =
+
+
           import.meta.env.VITE_ROOT_API + `/eventdata/addAttendee/` + event._id;
         axios.put(apiURL, { _id : this.$route.params.id }).then(() => {
+        alert("Client is now registered for the event");
+      
 
-          this.clientEvents = [];
+
+
+        });
+    }
+  
+  
+  });
+
+      this.clientEvents = [];
           axios
             .get(
               import.meta.env.VITE_ROOT_API +
@@ -178,11 +206,9 @@ export default {
               }
               
             });
-        });
-      });
+            this.refreshPage()
 
-      alert("Client is now registered for the event");
-      this.refreshPage()
+
 
     },
     editattendance(event) {
@@ -227,6 +253,7 @@ export default {
   <main>
     <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Update Client</h1>
     <div class="px-10 py-20">
+   
       <!-- @submit.prevent stops the submit event from reloading the page-->
       <form @submit.prevent="handleClientUpdate">
         <!-- grid container -->
@@ -395,6 +422,9 @@ export default {
               class="bg-red-700 text-white rounded"
             >Update Client</button>
           </div>
+
+
+          
           <!--New button for deleting the client in the Client Intake Form, follows the styling of the udate button-->
           <div class="flex justify-between mt-10 mr-20">
             <button
@@ -425,7 +455,6 @@ export default {
         <!-- Client Event Information -->
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10">
           <h2 class="text-2xl font-bold">Events for Client</h2>
-
           <div class="flex flex-col col-span-2">
             <table class="min-w-full shadow-md rounded">
               <thead class="bg-gray-50 text-xl">
@@ -461,14 +490,17 @@ export default {
               label="eventName"
             ></VueMultiselect>
             <div class="flex justify-between">
+         
               <button
-                @click="addToEvent(); refreshPage()"
+                @click="addToEvent(); "
                 type="submit"
                 class="mt-5 bg-red-700 text-white rounded"
               >Add Client to Events</button>
             </div>
           </div>
         </div>
+
+        
       </form>
     </div>
   </main>

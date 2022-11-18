@@ -20,13 +20,7 @@
                 required
 
               />
-              <span class="text-black" v-if="v$.client.firstName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.firstName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
+              
             </label>
           </div>
 
@@ -55,13 +49,6 @@
                 v-model="client.lastName"
                 required
               />
-              <span class="text-black" v-if="v$.client.lastName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.lastName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
@@ -82,13 +69,6 @@
                 v-model="client.email"
                 required
               />
-              <span class="text-black" v-if="v$.client.email.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.email.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <!-- form field -->
@@ -104,13 +84,6 @@
                 v-model="client.phoneNumbers.primaryPhone"
                 required
               />
-              <span class="text-black" v-if="v$.client.phoneNumbers.primaryPhone.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.phoneNumbers.primaryPhone.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <!-- form field -->
@@ -166,13 +139,6 @@
                 v-model="client.address.city"
                 required
               />
-              <span class="text-black" v-if="v$.client.address.city.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.client.address.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
           <div></div>
@@ -222,8 +188,9 @@ import axios from "axios";
 // Lam 
 
 export default {
-  
+
   setup() {
+  // Activating vuelidate within the setup
     return { v$: useVuelidate({ $autoDirty: true }) };
   },
   mounted() {

@@ -16,7 +16,9 @@ const subtractMonths = (date, months) => {
 
 //GET all entries
 router.get("/", (req, res, next) => { 
-    primarydata.find( 
+    primarydata.find(  {
+        org_id:process.env.ORG_ID
+        },
         (error, data) => {
             if (error) {
                 return next(error);
@@ -203,15 +205,6 @@ router.put("/unattend_event/:eventid/:id", (req, res, next) => {
 
 
 
-
-
-
-
-
-
-
-
-
 //Lauren 
 //DELETE for the intake form, which remvoes a client based on the _id 
 router.delete("/:id", (req,res,next)=>{
@@ -247,15 +240,28 @@ router.get("/getnum/:nums", (req, res, next) => {
 });
 
 // Lam 
-// count of cilents who signed up for events past two months
+// count of cilents who signed up for events past two months 
 router.get("/search_attendee_2_months/", (req,res,next)=>{
 
-    eventdata.find({
+    eventdata.find(
+
+        // taking two condtions must match the org_id as well as the date requirement
+{
+    $and: [
+
+{
     date: {
         $gte: subtractMonths(new Date(), 2),
         $lte: new Date()
-    }}
-    ,{eventName:1,attendees:1,date:1},
+}},
+
+   { org_id:process.env.ORG_ID }
+
+    ]}
+
+
+
+    ,{eventName:1,attendees:1,date:1,org_id:1},
     (error, data) => { 
         if (error) {
             return next(error);
@@ -299,11 +305,18 @@ router.get("/search_attendee_2_months/", (req,res,next)=>{
 router.get("/search_attendee_chart/", (req,res,next)=>{
 
     eventdata.find({
-    date: {
-        $gte: subtractMonths(new Date(), 2),
-        $lte: new Date()
-    }}
-    ,{eventName:1,attendees:1,date:1},
+        $and: [
+    
+    {
+        date: {
+            $gte: subtractMonths(new Date(), 2),
+            $lte: new Date()
+    }},
+    
+       { org_id:process.env.ORG_ID }
+    
+        ]}
+    ,{eventName:1,attendees:1,date:1,org_id:1},
     (error, data) => { 
         if (error) {
             return next(error);
