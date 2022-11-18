@@ -8,10 +8,11 @@ npm install
 ```
 
 ### Before startup 
-Setup a .env file with the following variables, e.g.:
+Setup a .env file with the following variables: ORG_ID, ORG_NAME, PORT, the MONGO_URL below is 
+for our mongo database that is now deployed on the cloud, so it requires the username and password to connect
 
 ```
-MONGO_URL = mongodb+srv://<username>:<password>@cluster0.abcdc.mongodb.net/dbname
+MONGO_URL = mongodb+srv://user:7QHBAbsJLmBbnPpc@cluster0.jg6ollk.mongodb.net/Group_5
 ```
 
 ### Compiles and hot-reloads for development
