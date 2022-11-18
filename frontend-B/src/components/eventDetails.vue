@@ -15,15 +15,9 @@
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="event.eventName" required
+                v-model="event.eventName" 
+                required
               />
-              <span class="text-black" v-if="v$.event.eventName.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.eventName.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
@@ -36,14 +30,8 @@
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="event.date"
                 type="date"
+                required
               />
-              <span class="text-black" v-if="v$.event.date.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.date.$errors"
-                  :key="error.$uid"
-                >{{ error.$message }}!</p>
-              </span>
             </label>
           </div>
 
@@ -128,11 +116,12 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Address Line 1</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
                 v-model="event.address.line1"
+                required
               />
             </label>
           </div>
@@ -152,6 +141,7 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">City</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -166,12 +156,14 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">County</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder
                 v-model="event.address.county"
-                
+
+               
               />
             </label>
           </div>
@@ -179,12 +171,15 @@
           <div class="flex flex-col">
             <label class="block">
               <span class="text-gray-700">Zip Code</span>
+              <span style="color:#ff0000">*</span>
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
+                placeholder="XXXXX"
+                pattern="(^\d{5}$)"
                 v-model="event.address.zip"
-             
+
+
               />
             </label>
           </div>
@@ -199,6 +194,7 @@
               class="bg-red-700 text-white rounded"
             >Update Event</button>
           </div>
+          <!--added a button in the frontend so that the use can delete an event-->
           <div class="flex justify-between mt-10 mr-20">
             <button
               @click="deleteEvent"
@@ -323,8 +319,13 @@ export default {
     handleEventUpdate() {
       this.event.services = this.checkedServices;
 
+
       if (this.event.eventName === "" || this.event.date === "" || this.event.address.line1 === "" || this.event.city === "" || this.event.county === ""
       || this.event.zip === "")
+
+      //adding validation so that when a user is updating an event they will not be able to resubit if the required fields are left blank
+
+
       {
         alert("Missing Field Element")
 

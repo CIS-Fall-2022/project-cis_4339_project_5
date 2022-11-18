@@ -4,7 +4,7 @@
       <h1 class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10">Welcome</h1>
     </div>
 
-<!-- This is the part of the code where i am going to design my graph-->
+<!-- Graph Design div below-->
 
 
 <div class="column">
@@ -71,7 +71,9 @@
          
             </tr>
           </thead>
-
+          <!--This sections sets up the table for the event attendee, it only shows the name
+          of the event and the number of attendees. This is accomplished using a v-for loop
+          that loops through the queryData array that is populated with data in the script section-->
           <tbody class="divide-y divide-gray-300">
             <tr  v-for="Attendees , event in queryData" >
               
@@ -105,7 +107,6 @@ export default {
     return {
       // this is what querydata looks like 
       // requires two loops to get the data to appear correctly
-      // { "HEB": 0, "uh coding session": 5, "laurens uh homecoming ": 2 }
       queryData: [],
       x_axis: [],
       y_axis: [],
@@ -119,7 +120,7 @@ export default {
 // mymethod that is being called in real time to constantly bring updates to the chart 
 
 methods: {
-
+//created a new method that ensures that the first letter of the word is capitalized, which can be used in different text throughout the page
   capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 },
@@ -134,7 +135,7 @@ async fetchData() {
 
 
 
-    // this api returns a josn object for chart.js to use to create the graph
+    // this api returns a json object for chart.js to use to create the graph
         const url = import.meta.env.VITE_ROOT_API + "/primaryData/search_attendee_chart/"
 
         const response = await axios.get(url);
@@ -174,7 +175,8 @@ async fetchData() {
   },
 
   mounted() {
-
+//here is where we retrieve the data used for the table, via an axios api call we store the request
+//data in the queryData array.
     let apiURL = import.meta.env.VITE_ROOT_API + `/primaryData/search_attendee_2_months/`;
         this.queryData = [];
         axios.get(apiURL).then((resp) => {
